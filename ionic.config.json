@@ -1,0 +1,7 @@
+{
+  "name": "PokerChart",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
