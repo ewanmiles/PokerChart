@@ -1,27 +1,121 @@
-#container {
+ion-content {
+  background-color: var(--ion-color-primary-contrast);
+}
+
+.flex {
+  display: flex;
+}
+
+.error {
+  color: var(--ion-color-danger);
+  margin: 20px 0 0 8vw;
+  display: none;
+
+  p {
+    margin: 0 0 0 5px;
+  }
+
+  ion-icon {
+    padding-top: 2px;
+  }
+}
+
+.buttons {
+  margin: 2.6vh auto 0;
+  width: 24.7vh;
+}
+
+.graph {
+  border-top: solid 2px var(--ion-color-primary);
+  padding: 10px 0;
+  margin: 10px 0;
+}
+
+.percent {
+  font-size: 3vh;
+  margin-left: 37vw;
+
+  h3 {
+    margin: 0;
+    font-size: 2.4vh;
+  }
+}
+
+.head {
+  font-size: 5vh;
   text-align: center;
+}
 
+.subtitle {
+  font-size: 2.6vh;
+  padding-left: 10px;
+}
+
+h2 {
+  text-align: center;
+}
+
+h2.buy {
+  margin-top: 30vh;
+}
+
+ion-input.change {
+  font-size: 2.5vh;
+  width: 80%;
+  margin: 0 auto;
+  border: solid 2px var(--ion-color-primary);
+  border-radius: 10px;
+  --padding-start: 5px;
+  margin-top: 2vh;
+}
+
+ion-input.buy {
+  font-size: 2.5vh;
+  width: 70%;
+  margin: 0 auto;
+  border: solid 2px var(--ion-color-primary);
+  border-radius: 10px;
+  --padding-start: 5px;
+}
+
+.loss {
+  --background: var(--ion-color-danger);
+  --background-activated: var(--ion-color-danger-shade);
+  font-size: 3vh;
+}
+
+.gain {
+  --background: var(--ion-color-success);
+  --background-activated: var(--ion-color-success-shade);
+  font-size: 3vh;
+}
+
+.start {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 50vh;
+  left: 40vw;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+.submit {
+  margin: 1vh 0 0 35.5vw;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+.add-buy {
+  transition: 0.7s ease-in-out;
+  background-color: var(--ion-color-primary-contrast);
+  position: absolute;
+  z-index: 5;
+  height: 100vh;
+  top: 18vh;
+  width: 100vw;
 }
 
-#container a {
-  text-decoration: none;
+.slide-down {
+  border-top: solid 2px var(--ion-color-primary);
+  transition: 0.4s ease-out;
+  background-color: var(--ion-color-primary-contrast);
+  position: absolute;
+  top: 30vh;
+  width: 100vw;
+  z-index: 4;
 }
