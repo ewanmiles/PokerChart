@@ -55,11 +55,15 @@
     <div class="graph">
       <h3 class="subtitle">Stack Size vs. Hand Number</h3>
       <canvas #stackChart></canvas>
+
+      <h4>Peak stack size: £{{ this.peakStack.toFixed(2) }}</h4>
     </div>
 
     <div class="graph">
       <h3 class="subtitle">Stack Change (increase/decrease) vs. Hand Number</h3>
       <canvas #changeChart></canvas>
+
+      <h4>Average change per hand: £{{ this.avgChange.toFixed(2) }}</h4>
     </div>
 
     <div class="graph">
@@ -67,6 +71,8 @@
       <h3 class="subtitle" *ngIf="this.takeNumber === 1">Top Take</h3>
       <h3 class="subtitle" *ngIf="this.takeNumber > 1">Top {{ this.takeNumber }} Takes</h3>
       <canvas #takeChart></canvas>
+
+      <h4 *ngIf="this.takeArray.length > 0" >Best win: £{{ this.takeArray[0].toFixed(2) }}</h4>
     </div>
 
   </div>

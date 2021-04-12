@@ -42,6 +42,8 @@ export class HomePage implements OnInit {
   percChange: number = 0;
   topTakes: Array<number> = [];
   takeNumber: number = 0;
+  avgChange: number = 0;
+  peakStack: number = 0;
 
   stackPoints;
   changePoints;
@@ -160,6 +162,14 @@ export class HomePage implements OnInit {
     });
   }
 
+  quickAvg(arr) {
+    /** 
+     * ES6 average method, input
+     * arr (arr): Array of values to be averaged
+    **/
+    return arr.reduce((p,c) => p + c, 0)/arr.length;
+  }
+
   startGame() {
     this.hand = 0;
     this.buyIn = parseFloat(`${this.buy.value}`);
@@ -173,6 +183,7 @@ export class HomePage implements OnInit {
       this.stackSize = this.buyIn.toFixed(2);
       this.handArray.push(this.hand);
       this.changeArray.push(0);
+      this.peakStack = this.buyIn;
 
       this.stackPoints.update();
       this.changePoints.update();
@@ -216,6 +227,9 @@ export class HomePage implements OnInit {
       } else if (this.changeType === 'gain') {
         this.countGain();
       };
+
+      this.avgChange = this.quickAvg(this.changeArray.slice(1,this.changeArray.length));
+      this.peakStack = this.valueArray.reduce(function(a,b) { return Math.max(a,b) });
 
       if (this.changeArray.length > 10) {
         this.takeNumber = 10;
