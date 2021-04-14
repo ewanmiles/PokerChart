@@ -14,7 +14,9 @@
       <p>Please enter a number for your buy-in!</p>
     </div>
 
-    <ion-button class="start" (click)="startGame()">Start</ion-button>
+    <div class="start">
+      <ion-button (click)="startGame()">Start</ion-button>
+    </div>
   </div>
 
   <div class="flex buttons">
@@ -22,18 +24,22 @@
     <ion-button #gain class="gain" (click)="showInput('gain')">Gain</ion-button>
   </div>
 
-  <ion-input
-  #take
-  class="change"
-  inputmode="decimal"
-  name="change">
-  </ion-input>
-
-  <ion-button #submit class="submit" (click)="submitChange()">Submit {{ this.changeType }}</ion-button>
-
-  <div class="flex error" #changeError>
-    <ion-icon name="alert-circle-outline"></ion-icon>
-    <p>Not a valid {{ this.changeType }}, please enter a number</p>
+  <div id="hidden">
+    <ion-input
+    #take
+    class="change"
+    inputmode="decimal"
+    name="change">
+    </ion-input>
+  
+    <div class="submit">
+      <ion-button #submit (click)="submitChange()">Submit {{ this.changeType }}</ion-button>
+    </div>
+  
+    <div class="flex error" #changeError>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Not a valid {{ this.changeType }}, please enter a number</p>
+    </div>
   </div>
 
   <div #slide class="slide-down">

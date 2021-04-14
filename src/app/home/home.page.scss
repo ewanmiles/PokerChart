@@ -2,14 +2,21 @@ ion-content {
   background-color: var(--ion-color-primary-contrast);
 }
 
+ion-button {
+  text-transform: none;
+}
+
 .flex {
   display: flex;
 }
 
 .error {
   color: var(--ion-color-danger);
-  margin: 20px 0 0 8vw;
+  margin-top: 20px;
   display: none;
+
+  width: 100%;
+  justify-content: center; //When displayed, flexbox, this centers elements
 
   p {
     margin: 0 0 0 5px;
@@ -22,7 +29,8 @@ ion-content {
 
 .buttons {
   margin: 2.6vh auto 0;
-  width: 24.7vh;
+  width: 100%;
+  justify-content: center;
 }
 
 .graph {
@@ -33,7 +41,9 @@ ion-content {
 
 .percent {
   font-size: 3vh;
-  margin-left: 37vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   h3 {
     margin: 0;
@@ -98,11 +108,16 @@ ion-input.buy {
 .start {
   position: absolute;
   top: 50vh;
-  left: 40vw;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .submit {
-  margin: 1vh 0 0 35.5vw;
+  margin-top: 1vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .add-buy {
@@ -110,7 +125,7 @@ ion-input.buy {
   background-color: var(--ion-color-primary-contrast);
   position: absolute;
   z-index: 5;
-  height: 100vh;
+  height: 170vh;
   top: 18vh;
   width: 100vw;
 }
@@ -123,4 +138,106 @@ ion-input.buy {
   top: 30vh;
   width: 100vw;
   z-index: 4;
+}
+
+/* Media queries haven't been done optimally. Should have started from the smallest device and built up, or vice versa.
+The app was initially optimised for iPhone X, bang in the middle */
+
+/* iPhone 5/SE (useless phone) */
+@media only screen and (max-device-height: 590px) {
+  .start {
+    top: 52vh;
+  }
+
+  .slide-down {
+    top: 36vh
+  }
+}
+
+/* Moto G4, Galaxy S5 */
+@media only screen and (max-device-height: 650px) and (min-device-height: 591px) {
+  .add-buy {
+    top: 23vh;
+  }
+
+  h2.buy {
+    margin-top: 25vh;
+  }
+
+  .slide-down {
+    top: 32vh
+  }
+}
+
+/* Galaxy Fold (ridiculously tall and thin) */
+@media only screen and (max-device-height: 655px) and (max-device-width: 280px) {
+  .add-buy {
+    top: 25vh;
+  }
+
+  h2.buy {
+    margin-top: 20vh;
+  }
+}
+
+/* Pixel 2, iPhone 6/7/8, iPhone 6/7/8 + */
+@media only screen and (max-device-height: 740px) and  (min-device-height: 656px) {
+  .add-buy {
+    top: 21vh;
+  }
+
+  .slide-down {
+    top: 28vh;
+  }
+}
+
+/* iPhone 6/7/8 */
+@media only screen and (max-device-height: 670px) {
+  .slide-down {
+    top: 33vh;
+  }
+}
+
+/* iPhone 6/7/8 Plus */
+@media only screen and (max-device-height: 738px) {
+  .slide-down {
+    top: 32vh;
+  }
+}
+
+/* Pixel 2 XL */
+@media only screen and (max-device-height: 825px) and (min-device-height: 820px) {
+  .slide-down {
+    top: 26.5vh;
+  }
+}
+
+/* iPad */
+@media only screen and (min-device-width: 765px) {
+  .add-buy {
+    top: 13vh;
+  }
+
+  ion-button {
+    font-size: 2vh;
+  }
+
+  .slide-down {
+    top: 25.8vh;
+  }
+
+  .error {
+    font-size: 2vh;
+  }
+
+  h4 {
+    font-size: 3vh;
+  }
+}
+
+/* iPad Pro */
+@media only screen and (min-device-width: 1020px) {
+  h2 {
+    font-size: 3vh;
+  }
 }

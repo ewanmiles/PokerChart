@@ -197,8 +197,12 @@ export class HomePage implements OnInit {
   }
 
   showInput(type) {
+    //Get height of hidden content
+    var hiddenDiv = document.getElementById('hidden');
+    var hiddenHeight = hiddenDiv.getBoundingClientRect().height;
+
     this.changeType = type;
-    this.slideDown.nativeElement.style.transform = "translate(0vw, 15vh)";
+    this.slideDown.nativeElement.style.transform = `translate(0vw, ${hiddenHeight + 10}px)`; //Slide height of hidden content plus wiggle room
 
     if (type === "loss") {
       this.changeInput.nativeElement.style.border = "solid 2px var(--ion-color-danger)";
@@ -213,8 +217,13 @@ export class HomePage implements OnInit {
     this.take = parseFloat(`${this.change.value}`);
 
     if (Number.isNaN(this.take)) {
-      this.slideDown.nativeElement.style.transform = "translate(0vw, 20vh)";
-      this.changeError.nativeElement.style.display = "flex";
+      this.changeError.nativeElement.style.display = "flex"; //this has to come first or hidden height doesn't change
+
+      //Get new height of hidden content including error message
+      var hiddenDiv = document.getElementById('hidden');
+      var hiddenHeight = hiddenDiv.getBoundingClientRect().height;
+
+      this.slideDown.nativeElement.style.transform = `translate(0vw, ${hiddenHeight + 20}px)`;
     } else {
       this.slideDown.nativeElement.style.transform = "translate(0vw, 0vh)";
       this.slideDown.nativeElement.style.borderTop = "solid 2px var(--ion-color-primary)";
