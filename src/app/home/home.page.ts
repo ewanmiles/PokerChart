@@ -25,6 +25,8 @@ export class HomePage implements OnInit {
   @ViewChild('slide', { read: ElementRef }) slideDown: ElementRef;
   @ViewChild('submit') submit: IonButton;
   @ViewChild(IonContent) frame: IonContent;
+  @ViewChild('head', { read: ElementRef }) head: ElementRef;
+  @ViewChild('buttons', { read: ElementRef }) buttons: ElementRef;
 
   @ViewChild('stackChart') stackChart;
   @ViewChild('changeChart') changeChart;
@@ -54,6 +56,9 @@ export class HomePage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
+    this.positionBuy();
+    this.positionSlide();
+
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
     this.chartStack();
     this.chartChange();
@@ -168,6 +173,20 @@ export class HomePage implements OnInit {
      * arr (arr): Array of values to be averaged
     **/
     return arr.reduce((p,c) => p + c, 0)/arr.length;
+  }
+
+  positionBuy() {
+    var top = this.head.nativeElement.getBoundingClientRect().height;
+    this.buyScreen.nativeElement.style.top = `${top + 38}px`; //Note, 38 accounts for header children margins
+  }
+
+  positionSlide() {
+    var displayHeight = window.innerHeight;
+    var headTop = this.head.nativeElement.getBoundingClientRect().height;
+    var buttonsTop = this.buttons.nativeElement.getBoundingClientRect().height;
+
+    this.slideDown.nativeElement.style.top = `${headTop + 38 + buttonsTop + 10}px` //Again 38 is header children margins
+    //Factor of 10 just for clean positioning
   }
 
   startGame() {
