@@ -1,0 +1,44 @@
+<ion-content>
+  <div class="flex">
+    <h1 class="poker">Poker</h1>
+    <img src="../../assets/icon/pokericon.png" alt="PokerIcon"/>
+    <h1 class="chart">Chart</h1>
+  </div>
+
+  <ion-segment #logtype (ionChange)="this.changeDisplay()">
+    <ion-segment-button value="login">
+      <ion-label>Login</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="register">
+      <ion-label>Register</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div #register>
+    <form class="form" [formGroup]='signupForm' (ngSubmit)='onSubmit()'>
+      <h1>Email</h1>
+      <ion-input type="text" formControlName="email" placeholder="email@domain.com"></ion-input>
+      <h1>Password</h1>
+      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+    </form>
+
+    <div class="flex">
+      <ion-button type="submit" [disabled]="!signupForm.valid" (click)="onSubmit()">Register</ion-button>
+    </div>
+  </div>
+
+  <div #login>
+    <form class="form" [formGroup]='loginForm' (ngSubmit)='onLogin()'>
+      <h1>Email</h1>
+      <ion-input type="text" formControlName="email" placeholder="email@domain.com"></ion-input>
+      <h1>Password</h1>
+      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+    </form>
+
+    <div class="flex">
+      <ion-button type="submit" (click)="onLogin()">Log in</ion-button>
+    </div>
+  </div>
+
+  <p *ngIf="this.error">{{ this.errorMsg }}</p>
+</ion-content>

@@ -1,0 +1,50 @@
+ion-content {
+    overflow: hidden;
+    --overflow: hidden;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+
+    h1 {
+        font-size: 5vh;
+        margin-top: 10px;
+    }
+}
+
+.poker {
+    margin-right: 10px;
+}
+
+.chart {
+    margin-left: 10px;
+}
+
+img {
+    height: 8vh;
+}
+
+ion-segment {
+    margin-top: 10px;
+    text-transform: none;
+}
+
+ion-button {
+    text-transform: none;
+}
+
+.form {
+    margin: 20px;
+    padding: 5px 5px 20px 5px;
+    border-radius: 20px;
+    border: solid 1px var(--ion-color-primary);
+}
+
+p {
+    width: 90%;
+    margin: 5px auto 0;
+    color: var(--ion-color-danger);
+}

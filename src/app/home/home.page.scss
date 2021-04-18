@@ -6,6 +6,14 @@ ion-button {
   text-transform: none;
 }
 
+ion-button.toHistory {
+  color: var(--ion-color-primary);
+  --background: transparent;
+  --background-activated: transparent;
+  --box-shadow: none;
+  width: 100%;
+}
+
 .flex {
   display: flex;
 }

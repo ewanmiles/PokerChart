@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonInput, IonButton, IonContent } from '@ionic/angular';
 import { Chart, 
   LineController, 
@@ -9,6 +10,8 @@ import { Chart,
   LinearScale, 
   Title, 
   CategoryScale } from 'chart.js';
+
+import { GameService } from '../services/game/game.service';
 
 @Component({
   selector: 'app-home',
@@ -47,13 +50,23 @@ export class HomePage implements OnInit {
   avgChange: number = 0;
   peakStack: number = 0;
 
+  userGameHistory;
+  gameName: string;
+
   stackPoints;
   changePoints;
   takePoints;
 
-  constructor() {}
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.gameService.getGames().subscribe(res => {
+      this.userGameHistory = res;
+    });
+  }
 
   ionViewDidEnter() {
     this.positionBuy();
@@ -204,14 +217,26 @@ export class HomePage implements OnInit {
       this.changeArray.push(0);
       this.peakStack = this.buyIn;
 
-      this.stackPoints.update();
-      this.changePoints.update();
-      this.takePoints.update();
+      this.updateCharts();
 
       this.buyScreen.nativeElement.style.transform = "translate(0vw, 70vh)";
       setTimeout(() => {this.buyScreen.nativeElement.style.display = "none"}, 700);
 
       this.frame.scrollToTop(300);
+
+      if (this.userGameHistory.length > 0) {
+        this.gameName = `${this.userGameHistory.length + 1}`;
+      } else {
+        this.gameName = "1";
+      };
+
+      this.gameService.addToGames(this.gameName, 
+        [this.valueArray, 
+          this.changeArray, 
+          this.takeArray, 
+          this.peakStack, 
+          this.avgChange, 
+          0]);
     }
   }
 
@@ -267,9 +292,15 @@ export class HomePage implements OnInit {
 
       this.takeArray.sort((a,b) => {return b-a});
     
-      this.stackPoints.update();
-      this.changePoints.update();
-      this.takePoints.update();
+      this.updateCharts();
+
+      this.gameService.addToGames(this.gameName, 
+        [this.valueArray, 
+          this.changeArray, 
+          this.takeArray, 
+          this.peakStack, 
+          this.avgChange, 
+          this.takeArray[0].toFixed(2)]); //Push to database
     }
   }
 
@@ -297,5 +328,15 @@ export class HomePage implements OnInit {
     this.takeArray.push(this.take);
 
     this.stackSize = this.stackSize.toFixed(2);
+  }
+
+  updateCharts() {
+    this.stackPoints.update();
+    this.changePoints.update();
+    this.takePoints.update();
+  }
+
+  routeTo(dest) {
+    this.router.navigateByUrl(dest);
   }
 }
