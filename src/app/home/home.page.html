@@ -7,14 +7,39 @@
   </div>
 
   <div #buyScreen class="add-buy">
-    <h2 class="buy">Enter your buy-in for the game:</h2>
+    <ion-input class="buy" #name placeholder="Game name" (ionChange)="removeSlash($event)"></ion-input>
 
-    <p class="pound-sign">£</p>
-    <ion-input class="buy" #buy></ion-input>
+    <ion-segment #currency 
+    mode="ios" 
+    class="buy" 
+    color="primary"
+    (ionChange)="selectCurrency()">
+      <ion-segment-button value="£">
+        <ion-label>£</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="$">
+        <ion-label>$</ion-label>
+      </ion-segment-button>
+      
+      <ion-segment-button value="€">
+        <ion-label>€</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div class="flex">
+      <p class="curr-sign">{{ this.curr }}</p>
+      <ion-input class="buy curr" #buy placeholder="Buy-in"></ion-input>
+    </div>
 
     <div class="flex error" #buyError>
       <ion-icon name="alert-circle-outline"></ion-icon>
       <p>Please enter a number for your buy-in!</p>
+    </div>
+
+    <div class="flex error" #nameError>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Please enter a name for the game!</p>
     </div>
 
     <div class="start">
@@ -47,7 +72,7 @@
 
   <div #slide class="slide-down">
     <h2>Current stack size</h2>
-    <h2>£{{ this.stackSize }}</h2>
+    <h2>{{ this.curr }}{{ this.stackSize }}</h2>
 
     <div class="flex percent" 
     [style.color]="this.percChange > 0 ? 'var(--ion-color-success)' :
@@ -65,14 +90,14 @@
       <h3 class="subtitle">Stack Size vs. Hand Number</h3>
       <canvas #stackChart></canvas>
 
-      <h4>Peak stack size: £{{ this.peakStack.toFixed(2) }}</h4>
+      <h4>Peak stack size: {{ this.curr}}{{ this.peakStack.toFixed(2) }}</h4>
     </div>
 
     <div class="graph">
       <h3 class="subtitle">Stack Change (increase/decrease) vs. Hand Number</h3>
       <canvas #changeChart></canvas>
 
-      <h4>Average change per hand: £{{ this.avgChange.toFixed(2) }}</h4>
+      <h4>Average change per hand: {{ this.curr }}{{ this.avgChange.toFixed(2) }}</h4>
     </div>
 
     <div class="graph">
@@ -81,10 +106,10 @@
       <h3 class="subtitle" *ngIf="this.takeNumber > 1">Top {{ this.takeNumber }} Takes</h3>
       <canvas #takeChart></canvas>
 
-      <h4 *ngIf="this.takeArray.length > 0" >Best win: £{{ this.takeArray[0].toFixed(2) }}</h4>
+      <h4 *ngIf="this.takeArray.length > 0" >Best win: {{ this.curr }}{{ this.takeArray[0].toFixed(2) }}</h4>
     </div>
 
-    <ion-button class="toHistory" (click)="this.routeTo('history')">Game History</ion-button>
+    <ion-button class="toHistory" (click)="this.routeTo('history')">End Game</ion-button>
   </div>
 
 </ion-content>

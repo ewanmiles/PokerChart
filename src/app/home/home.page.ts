@@ -1,6 +1,7 @@
+import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonInput, IonButton, IonContent } from '@ionic/angular';
+import { IonInput, IonButton, IonContent, IonSegment } from '@ionic/angular';
 import { Chart, 
   LineController, 
   BarController, 
@@ -23,8 +24,13 @@ export class HomePage implements OnInit {
   @ViewChild('take') change: IonInput;
   @ViewChild('buyScreen', { read: ElementRef }) buyScreen: ElementRef;
   @ViewChild('buy') buy: IonInput;
+  @ViewChild('name') name: IonInput;
+  @ViewChild('currency') currency: IonSegment;
+
   @ViewChild('buyError', { read: ElementRef }) buyError: ElementRef;
+  @ViewChild('nameError', { read: ElementRef }) nameError: ElementRef;
   @ViewChild('changeError', { read: ElementRef }) changeError: ElementRef;
+
   @ViewChild('slide', { read: ElementRef }) slideDown: ElementRef;
   @ViewChild('submit') submit: IonButton;
   @ViewChild(IonContent) frame: IonContent;
@@ -51,7 +57,8 @@ export class HomePage implements OnInit {
   peakStack: number = 0;
 
   userGameHistory;
-  gameName: string;
+  gameName: string | number = "";
+  curr: string = "£";
 
   stackPoints;
   changePoints;
@@ -71,6 +78,8 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.positionBuy();
     this.positionSlide();
+    this.currency.value = "£";
+    this.name.value = "";
 
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
     this.chartStack();
@@ -206,6 +215,12 @@ export class HomePage implements OnInit {
     this.hand = 0;
     this.buyIn = parseFloat(`${this.buy.value}`);
 
+    if (this.name.value === "") {
+      this.gameName = this.assignGameNumber()
+    } else {
+      this.gameName = this.name.value;
+    };
+
     if (Number.isNaN(this.buyIn)) {
       this.buyError.nativeElement.style.display = "flex";
     } else {
@@ -224,13 +239,8 @@ export class HomePage implements OnInit {
 
       this.frame.scrollToTop(300);
 
-      if (this.userGameHistory.length > 0) {
-        this.gameName = `${this.userGameHistory.length + 1}`;
-      } else {
-        this.gameName = "1";
-      };
-
-      this.gameService.addToGames(this.gameName, 
+      this.gameService.addToGames(this.gameName,
+        this.curr, 
         [this.valueArray, 
           this.changeArray, 
           this.takeArray, 
@@ -238,6 +248,25 @@ export class HomePage implements OnInit {
           this.avgChange, 
           0]);
     }
+  }
+
+  assignGameNumber() {
+    var used = [];
+
+    for (let i = 0; i < Object.keys(this.userGameHistory).length; i++) {
+      try {
+        var no = parseInt(Object.keys(this.userGameHistory)[i]);
+        used.push(no);
+      } catch {
+        continue;
+      };
+    };
+
+    if (used.length > 0) {
+      return `${used[-1] + 1}`;
+    } else {
+      return "1";
+    };
   }
 
   showInput(type) {
@@ -295,6 +324,7 @@ export class HomePage implements OnInit {
       this.updateCharts();
 
       this.gameService.addToGames(this.gameName, 
+        this.curr,
         [this.valueArray, 
           this.changeArray, 
           this.takeArray, 
@@ -334,6 +364,18 @@ export class HomePage implements OnInit {
     this.stackPoints.update();
     this.changePoints.update();
     this.takePoints.update();
+  }
+
+  selectCurrency() {
+    this.curr = this.currency.value;
+  }
+
+  removeSlash(event) {
+    let newValue = event.target.value;
+
+    if (event.target.value.includes("/")) {
+      event.target.value = newValue.slice(0,-1);
+    };
   }
 
   routeTo(dest) {

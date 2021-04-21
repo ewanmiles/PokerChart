@@ -1,12 +1,20 @@
 <ion-content>
   <ion-slides #slides>
     <ion-slide id="main">
-      <h1>Game History</h1>
-      <ion-button (click)="this.routeTo('home')">Start a new game</ion-button>
+      <div class="title">
+        <img src="../../assets/icon/pokericon.png">
+        <h1>Game History</h1>
+      </div>
+
+      <ion-button (click)="this.routeTo('home')">
+        Start a new game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+      </ion-button>
+
+      <span #noGames class="hide">No games found! Start one to see your game history.</span>
 
       <ion-list>
-        <ion-item class="game" *ngFor="let game of this.gameNumbers; index as i" (click)="selectGame(game)">
-          <ion-label>{{ game }}</ion-label>
+        <ion-item class="game" *ngFor="let game of this.userGameHistory; index as i" (click)="selectGame(i)">
+          <ion-label>{{ game.name }}</ion-label>
         </ion-item>
       </ion-list>
 
@@ -17,23 +25,23 @@
     <ion-slide id="viewed" *ngIf="this.chosenGame">
       <h1>{{ this.chosenGame.name }}</h1>
 
-      <div class="flex">
+      <ion-button class="back">
         <ion-icon name="arrow-back-outline"></ion-icon>
-        <p (click)="this.unlockAndSlide('prev')">Back</p>
-      </div>
+        <p (click)="this.unlockAndSlide('prev')">Back to History</p>
+      </ion-button>
 
       <div class="graph">
         <h3 class="subtitle">Stack Size vs. Hand Number</h3>
         <canvas #stackChart></canvas>
   
-        <h4>Peak stack size: £{{ this.chosenGame.peakStack.toFixed(2) }}</h4>
+        <h4>Peak stack size: {{ this.chosenGame.curr }}{{ this.chosenGame.peakStack.toFixed(2) }}</h4>
       </div>
   
       <div class="graph">
         <h3 class="subtitle">Stack Change (increase/decrease) vs. Hand Number</h3>
         <canvas #changeChart></canvas>
   
-        <h4>Average change per hand: £{{ this.chosenGame.avgChange.toFixed(2) }}</h4>
+        <h4>Average change per hand: {{ this.chosenGame.curr }}{{ this.chosenGame.avgChange.toFixed(2) }}</h4>
       </div>
   
       <div class="graph">
@@ -42,8 +50,13 @@
         <h3 class="subtitle" *ngIf="this.chosenGame.takeArray.length < 10">Top {{ this.chosenGame.takeNumber }} Takes</h3>
         <canvas #takeChart></canvas>
   
-        <!--h4 *ngIf="this.takeArray.length > 0" >Best win: £{{ this.chosenGame.bestWin.toFixed(2) }}</h4-->
+        <h4 *ngIf="this.chosenGame.takeArray.length > 0" >Best win: {{ this.chosenGame.curr }}{{ this.bestWin.toFixed(2) }}</h4>
       </div>
+
+      <ion-button class="logout">
+        <p (click)="this.deleteChosenGame()">Delete {{ this.chosenGame.name }}</p>
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
     </ion-slide>
   </ion-slides>
 </ion-content>

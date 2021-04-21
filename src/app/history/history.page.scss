@@ -4,6 +4,14 @@ ion-slide {
     width: 100vw;
 }
 
+.hide {
+    display: none;
+}
+
+span {
+    width: 90%;
+}
+
 .flex {
     display: flex;
     width: 100%;
@@ -23,6 +31,10 @@ ion-button {
     --background-activated: transparent;
     text-transform: none;
     --box-shadow: none;
+
+    ion-icon {
+        margin-left: 5px;
+    };
 }
 
 .logout {
@@ -31,4 +43,28 @@ ion-button {
 
 ion-list {
     width: 95vw;
+
+    ion-item {
+        --inner-border-width: 0;
+        border-bottom: solid 1px var(--ion-color-primary);
+    };
+}
+
+.title {
+    display: flex;
+    width: 90vw;
+    text-align: left;
+
+    img {
+        margin: 2.5vh 5px 5px;
+        height: 7vh;
+    };
+
+    h1 {
+        font-size: 4.5vh;
+    };
+}
+
+.back {
+    margin-left: -55vw;
 }

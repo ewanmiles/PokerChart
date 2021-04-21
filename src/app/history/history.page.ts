@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { Chart, 
   LineController, 
@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 })
 export class HistoryPage implements OnInit {
   @ViewChild('slides') slides: IonSlides;
+  @ViewChild('noGames', { read: ElementRef }) noGames: ElementRef;
 
   @ViewChild('stackChart') stackChart;
   @ViewChild('changeChart') changeChart;
@@ -36,6 +37,7 @@ export class HistoryPage implements OnInit {
   takePoints;
 
   handArray = [];
+  bestWin: number = 0;
 
   constructor(
     private gameService: GameService,
@@ -46,33 +48,47 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     this.gameService.getGames().subscribe(res => {
       this.userGameHistory = res;
-      this.gameNumbers = Object.keys(res);
-      this.gameNumbers = this.gameNumbers.map(function(el) { return parseInt(el)+1 });
-      this.chosenGame = this.userGameHistory[1];
+      
+      try {
+        this.chosenGame = this.userGameHistory[Object.keys(this.userGameHistory)[0]];
 
-      this.handArray = [];
+        this.handArray = [];
 
-      for (const [index, element] of this.chosenGame["valueArray"].entries()) {
-        this.handArray.push(index);
-      };
+        for (const [index] of this.chosenGame["valueArray"].entries()) {
+          this.handArray.push(index);
+        };
+
+        this.getBestWin(this.chosenGame["takeArray"]);
+      } catch {
+        console.log("No games found!");
+      }
     });
   }
 
   ionViewDidEnter() {
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
-    this.chartStack();
-    this.chartChange();
-    this.chartTakes();
+
+    this.slides.lockSwipes(true);
+
+    if (this.userGameHistory.length === 0) {
+      this.noGames.nativeElement.style.display = "block";
+    } else {
+      this.noGames.nativeElement.style.display = "none";
+    };
   }
 
   updatePoints() {
-    this.stackPoints.destroy();
-    this.changePoints.destroy();
-    this.takePoints.destroy();
-
-    this.chartStack();
-    this.chartChange();
-    this.chartTakes();
+    try {
+      this.stackPoints.destroy(); //Replace graphs if already existent
+      this.changePoints.destroy();
+      this.takePoints.destroy();
+    } catch {
+      console.log("Starting graphs");
+    } finally {
+      this.chartStack();
+      this.chartChange();
+      this.chartTakes();
+    }
   }
 
   chartStack() {
@@ -178,26 +194,51 @@ export class HistoryPage implements OnInit {
   }
 
   async unlockAndSlide(direction) {
-    var current = await this.slides.getActiveIndex();
+    this.slides.lockSwipes(false);
 
     if (direction === "next") {
       this.slides.slideTo(1);
     } else {
       this.slides.slideTo(0); //Only need to slide to beginning
-    }
+    };
+
+    this.slides.lockSwipes(true);
   }
 
-  selectGame(number) {
-    this.chosenGame = this.userGameHistory[number - 1];
+  selectGame(ind) {
+    this.chosenGame = this.userGameHistory[ind];
 
     this.handArray = [];
 
-    for (const [index, element] of this.chosenGame["valueArray"].entries()) {
+    for (const [index] of this.chosenGame["valueArray"].entries()) {
       this.handArray.push(index);
     };
 
+    this.bestWin = 0;
+    this.getBestWin(this.chosenGame["takeArray"]);
+
     this.updatePoints();
     this.unlockAndSlide('next');
+  }
+
+  deleteChosenGame() {
+    this.gameService.deleteGame(this.chosenGame.name);
+
+    this.unlockAndSlide('prev');
+
+    setTimeout(() => {
+      if (this.userGameHistory.length === 0) {
+        this.noGames.nativeElement.style.display = "block";
+      };
+    }, 50);
+  }
+
+  getBestWin(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] > this.bestWin) {
+        this.bestWin = arr[i];
+      };
+    };
   }
 
   routeTo(dest) {

@@ -60,7 +60,7 @@ ion-button.toHistory {
 }
 
 .head {
-  font-size: 5vh;
+  font-size: 32px;
   text-align: center;
 }
 
@@ -78,10 +78,6 @@ h4 {
   color: var(--ion-color-dark-tint);
 }
 
-h2.buy {
-  margin-top: 30vh;
-}
-
 ion-input.change {
   font-size: 2.5vh;
   width: 80%;
@@ -92,21 +88,23 @@ ion-input.change {
   margin-top: 2vh;
 }
 
-ion-input.buy {
+ion-input.buy, ion-segment.buy {
   font-size: 2.5vh;
   width: 70%;
-  margin: 0 auto;
+  margin: 10vw auto 0;
   border: solid 2px var(--ion-color-primary);
   border-radius: 10px;
   --padding-start: 3.5vw;
 }
 
-.pound-sign {
+ion-input.curr {
+  margin-right: 15vw;
+}
+
+.curr-sign {
   z-index: 3;
-  position: absolute;
-  left: 16vw;
   font-size: 2.5vh;
-  margin-top: 12px;
+  margin: 7.5vh 2vw 0 16vw;
 }
 
 .loss {
