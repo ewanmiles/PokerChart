@@ -45,6 +45,7 @@ export class HomePage implements OnInit {
   valueArray: Array<number> = [];
   changeArray: Array<number> = [];
   takeArray: Array<number> = [];
+  takeArrayOrdered: Array<number> = [];
   stackSize;
   buyIn;
   hand: number;
@@ -116,6 +117,11 @@ export class HomePage implements OnInit {
               text: 'Stack size (£)',
             }
           },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
         }
       },
     });
@@ -149,6 +155,11 @@ export class HomePage implements OnInit {
               color: 'var(--ion-color-light-contrast)',
               text: 'Change in stack size (£)',
             }
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
           },
         }
       },
@@ -334,6 +345,61 @@ export class HomePage implements OnInit {
     }
   }
 
+  undoLastMove() {
+    if (this.hand === 0) {
+      return "";
+    };
+
+    this.stackSize -= this.take;
+    
+    this.percChange = 100 * ((this.stackSize/this.buyIn) - 1);
+    this.valueArray.splice(-1,1);
+    this.changeArray.splice(-1,1);
+    this.takeArray.splice(-1,1);
+    this.takeArrayOrdered.splice(-1,1);
+
+    this.take = this.takeArrayOrdered[this.takeArrayOrdered.length-1];
+    console.log(this.take);
+
+    this.hand --;
+    this.handArray.splice(-1,1);
+
+    if (this.hand == 0) {
+      this.avgChange = 0;
+    } else {
+      this.avgChange = this.quickAvg(this.changeArray.slice(1,this.changeArray.length));
+    };
+
+    this.peakStack = this.valueArray.reduce(function(a,b) { return Math.max(a,b) });
+
+    if (this.changeArray.length > 10) {
+      this.takeNumber = 10;
+    } else {
+      this.takeNumber = this.changeArray.length-1;
+    }
+
+    this.takeArray.sort((a,b) => {return b-a});
+
+    this.stackSize = this.stackSize.toFixed(2);
+
+    this.updateCharts();
+
+    if (this.takeArray.length > 0) {
+      var takeToPush: number | string = this.takeArray[0].toFixed(2);
+    } else {
+      takeToPush = 0;
+    };
+
+    this.gameService.addToGames(this.gameName, 
+      this.curr,
+      [this.valueArray, 
+        this.changeArray, 
+        this.takeArray, 
+        this.peakStack, 
+        this.avgChange, 
+        takeToPush]); //Push to database
+  }
+
   countLoss() {
     this.stackSize = parseFloat(this.stackSize);
     this.stackSize -= this.take;
@@ -343,6 +409,7 @@ export class HomePage implements OnInit {
     this.valueArray.push(this.stackSize);
     this.changeArray.push(0-this.take);
     this.takeArray.push(0-this.take);
+    this.takeArrayOrdered.push(0-this.take);
 
     this.stackSize = this.stackSize.toFixed(2);
   }
@@ -356,6 +423,7 @@ export class HomePage implements OnInit {
     this.valueArray.push(this.stackSize);
     this.changeArray.push(this.take);
     this.takeArray.push(this.take);
+    this.takeArrayOrdered.push(this.take);
 
     this.stackSize = this.stackSize.toFixed(2);
   }

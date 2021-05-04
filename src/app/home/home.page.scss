@@ -134,6 +134,16 @@ ion-input.curr {
   justify-content: center;
 }
 
+.undo ion-button{
+  color: var(--ion-color-primary);
+  --background: transparent;
+  --background-activated: transparent;
+  text-transform: none;
+  --box-shadow: none;
+  font-size: 2.3vh;
+  width: 100%;
+}
+
 .add-buy {
   transition: 0.7s ease-in-out;
   background-color: var(--ion-color-primary-contrast);

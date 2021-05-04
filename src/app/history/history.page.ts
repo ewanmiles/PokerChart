@@ -120,6 +120,11 @@ export class HistoryPage implements OnInit {
               text: 'Stack size (£)',
             }
           },
+        },
+        elements: {
+          point: {
+            radius: 0,
+          },
         }
       },
     });
@@ -153,6 +158,11 @@ export class HistoryPage implements OnInit {
               color: 'var(--ion-color-light-contrast)',
               text: 'Change in stack size (£)',
             }
+          },
+        },
+        elements: {
+          point: {
+            radius: 0,
           },
         }
       },

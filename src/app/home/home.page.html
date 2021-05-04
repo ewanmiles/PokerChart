@@ -86,6 +86,10 @@
       <h3>({{ this.percChange.toFixed(1) }}%)</h3>
     </div>
 
+    <div class="flex undo">
+      <ion-button (click)="undoLastMove()"><ion-icon name="refresh-outline"></ion-icon> Undo last move</ion-button>
+    </div>
+
     <div class="graph">
       <h3 class="subtitle">Stack Size vs. Hand Number</h3>
       <canvas #stackChart></canvas>
