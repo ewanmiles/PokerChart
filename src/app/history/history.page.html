@@ -30,6 +30,20 @@
         <p (click)="this.unlockAndSlide('prev')">Back to History</p>
       </ion-button>
 
+      <h3 class="subtitle">Final stack size: {{ this.chosenGame.curr }}{{ this.finalStack.toFixed(2) }}</h3>
+
+      <div class="flex percent" 
+      [style.color]="this.finalChange > 0 ? 'var(--ion-color-success)' :
+                        this.finalChange < 0 ? 'var(--ion-color-danger)' :
+                        'var(--ion-color-light-contrast)'">
+
+        <ion-icon name="caret-up-outline" *ngIf="this.finalChange > 0"></ion-icon>
+        <ion-icon name="caret-down-outline" *ngIf="this.finalChange < 0"></ion-icon>
+        <ion-icon name="remove-outline" *ngIf="this.finalChange === 0"></ion-icon>
+
+        <h3>({{ this.chosenGame.curr }}{{ this.finalChange.toFixed(2) }})</h3>
+      </div>
+
       <div class="graph">
         <h3 class="subtitle">Stack Size vs. Hand Number</h3>
         <canvas #stackChart></canvas>
@@ -51,6 +65,18 @@
         <canvas #takeChart></canvas>
   
         <h4 *ngIf="this.chosenGame.takeArray.length > 0" >Best win: {{ this.chosenGame.curr }}{{ this.bestWin.toFixed(2) }}</h4>
+      </div>
+
+      <div class="graph">
+        <h3 class="subtitle">More stats</h3>
+
+        <table class="moreStats">
+          <tbody>
+            <tr *ngIf="this.chosenGame.preFolds != undefined"> <td>Off-Blind Pre-flop Folds</td> <td>{{ this.chosenGame.preFolds }}</td> </tr>
+            <tr> <td>Total Hands</td> <td>{{ this.chosenGame.takeArray.length }}</td> </tr>
+            <tr *ngIf="this.chosenGame.potsWon != undefined"> <td>Pots Won</td> <td>{{ this.chosenGame.potsWon }} ({{ this.potPerc.toFixed(2) }}%)</td> </tr>
+          </tbody>
+        </table>
       </div>
 
       <ion-button class="logout">

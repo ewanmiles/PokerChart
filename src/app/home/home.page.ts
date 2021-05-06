@@ -57,6 +57,12 @@ export class HomePage implements OnInit {
   avgChange: number = 0;
   peakStack: number = 0;
 
+  //More stats
+  totalChange: number = 0;
+  preFolds: number = 0;
+  potsWon: number = 0;
+  potPerc: number = 0;
+
   userGameHistory;
   gameName: string | number = "";
   curr: string = "£";
@@ -77,6 +83,8 @@ export class HomePage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.frame.scrollY = false;
+
     this.positionBuy();
     this.positionSlide();
     this.currency.value = "£";
@@ -214,7 +222,6 @@ export class HomePage implements OnInit {
   }
 
   positionSlide() {
-    var displayHeight = window.innerHeight;
     var headTop = this.head.nativeElement.getBoundingClientRect().height;
     var buttonsTop = this.buttons.nativeElement.getBoundingClientRect().height;
 
@@ -223,6 +230,8 @@ export class HomePage implements OnInit {
   }
 
   startGame() {
+    this.frame.scrollY = true;
+
     this.hand = 0;
     this.buyIn = parseFloat(`${this.buy.value}`);
 
@@ -257,7 +266,10 @@ export class HomePage implements OnInit {
           this.takeArray, 
           this.peakStack, 
           this.avgChange, 
-          0]);
+          0,
+          this.preFolds,
+          this.potsWon]);
+          // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
     }
   }
 
@@ -332,6 +344,7 @@ export class HomePage implements OnInit {
 
       this.takeArray.sort((a,b) => {return b-a});
     
+      this.updateStats();
       this.updateCharts();
 
       this.gameService.addToGames(this.gameName, 
@@ -341,7 +354,10 @@ export class HomePage implements OnInit {
           this.takeArray, 
           this.peakStack, 
           this.avgChange, 
-          this.takeArray[0].toFixed(2)]); //Push to database
+          this.takeArray[0].toFixed(2),
+          this.preFolds,
+          this.potsWon]); //Push to database
+          // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
     }
   }
 
@@ -350,18 +366,22 @@ export class HomePage implements OnInit {
       return "";
     };
 
-    this.stackSize -= this.take;
+    this.stackSize -= this.takeArrayOrdered[this.takeArrayOrdered.length-1];
+    this.hand --;
+
+    this.undoStats();
     
     this.percChange = 100 * ((this.stackSize/this.buyIn) - 1);
     this.valueArray.splice(-1,1);
     this.changeArray.splice(-1,1);
-    this.takeArray.splice(-1,1);
     this.takeArrayOrdered.splice(-1,1);
 
     this.take = this.takeArrayOrdered[this.takeArrayOrdered.length-1];
-    console.log(this.take);
 
-    this.hand --;
+    var mutable = [...this.takeArrayOrdered];
+
+    this.takeArray = [...mutable.sort((a,b) => {return b-a})];
+
     this.handArray.splice(-1,1);
 
     if (this.hand == 0) {
@@ -397,7 +417,10 @@ export class HomePage implements OnInit {
         this.takeArray, 
         this.peakStack, 
         this.avgChange, 
-        takeToPush]); //Push to database
+        takeToPush,
+        this.preFolds,
+        this.potsWon]); //Push to database
+        // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
   }
 
   countLoss() {
@@ -432,6 +455,30 @@ export class HomePage implements OnInit {
     this.stackPoints.update();
     this.changePoints.update();
     this.takePoints.update();
+  }
+
+  updateStats() {
+    var last = this.takeArrayOrdered[this.takeArrayOrdered.length - 1];
+    if (last === 0) {
+      this.preFolds ++;
+    } else if (last > 0) {
+      this.potsWon ++;
+    }
+
+    this.potPerc = (this.potsWon/this.hand)*100;
+    this.totalChange = this.stackSize - this.buyIn;
+  }
+
+  undoStats() {
+    var last = this.takeArrayOrdered[this.takeArrayOrdered.length - 1];
+    if (last === 0) {
+      this.preFolds --;
+    } else if (last > 0) {
+      this.potsWon --;
+    };
+
+    this.potPerc = (this.potsWon/this.hand)*100;
+    this.totalChange = this.stackSize - this.buyIn;
   }
 
   selectCurrency() {

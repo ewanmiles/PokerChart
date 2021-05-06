@@ -38,6 +38,9 @@ export class HistoryPage implements OnInit {
 
   handArray = [];
   bestWin: number = 0;
+  finalStack: number = 0;
+  finalChange: number = 0;
+  potPerc: number = 0;
 
   constructor(
     private gameService: GameService,
@@ -59,6 +62,9 @@ export class HistoryPage implements OnInit {
         };
 
         this.getBestWin(this.chosenGame["takeArray"]);
+
+        this.finalStack = this.chosenGame["valueArray"][this.chosenGame["valueArray"].length-1];
+        this.finalChange = this.finalStack - this.chosenGame["valueArray"][0];
       } catch {
         console.log("No games found!");
       }
@@ -224,8 +230,13 @@ export class HistoryPage implements OnInit {
       this.handArray.push(index);
     };
 
+    this.potPerc = (this.chosenGame["potsWon"]/this.chosenGame["takeArray"].length)*100
+
     this.bestWin = 0;
     this.getBestWin(this.chosenGame["takeArray"]);
+
+    this.finalStack = this.chosenGame["valueArray"][this.chosenGame["valueArray"].length-1];
+    this.finalChange = this.finalStack - this.chosenGame["valueArray"][0];
 
     this.updatePoints();
     this.unlockAndSlide('next');

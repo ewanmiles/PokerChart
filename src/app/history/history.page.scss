@@ -25,6 +25,18 @@ span {
     }
 }
 
+.percent {
+    font-size: 3vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  
+    h3 {
+      margin: 0;
+      font-size: 2.4vh;
+    }
+  }
+
 ion-button {
     color: var(--ion-color-primary);
     --background: transparent;
@@ -64,6 +76,17 @@ ion-list {
         font-size: 4.5vh;
     };
 }
+
+.moreStats {
+    text-align: left;
+    width: 95vw;
+    margin-left: 3vw;
+  
+    tr {
+      height: 4vh;
+      border-bottom: solid 1px var(--ion-color-primary);
+    }
+  }
 
 .back {
     margin-left: -55vw;

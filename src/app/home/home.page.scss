@@ -163,6 +163,16 @@ ion-input.curr {
   z-index: 4;
 }
 
+.moreStats {
+  width: 95vw;
+  margin-left: 3vw;
+
+  tr {
+    height: 4vh;
+    border-bottom: solid 1px var(--ion-color-primary);
+  }
+}
+
 /* Tablets not quite optimised */
 
 /* iPhone 5/SE (useless phone) */
