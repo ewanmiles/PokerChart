@@ -12,7 +12,7 @@ import { Chart,
 
 import { GameService } from '../services/game/game.service';
 import { AuthService } from '../services/auth/auth.service';
-import { IonSlides } from '@ionic/angular';
+import { IonContent, IonInput, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,12 +21,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./history.page.scss'],
 })
 export class HistoryPage implements OnInit {
+  @ViewChild(IonContent) frame: IonContent;
   @ViewChild('slides') slides: IonSlides;
   @ViewChild('noGames', { read: ElementRef }) noGames: ElementRef;
 
   @ViewChild('stackChart') stackChart;
   @ViewChild('changeChart') changeChart;
   @ViewChild('takeChart') takeChart;
+
+  @ViewChild('oldName', { read: ElementRef }) oldNameText: ElementRef;
+  @ViewChild('newName', { read: ElementRef }) newNameText: ElementRef;
+  @ViewChild('nameInput') nameInput: IonInput;
 
   userGameHistory;
   gameNumbers;
@@ -51,8 +56,14 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     this.gameService.getGames().subscribe(res => {
       this.userGameHistory = res;
-      
-      try {
+    });
+  }
+
+  ionViewDidEnter() {
+    Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
+
+    try {
+      setTimeout(() => {
         this.chosenGame = this.userGameHistory[Object.keys(this.userGameHistory)[0]];
 
         this.handArray = [];
@@ -65,14 +76,10 @@ export class HistoryPage implements OnInit {
 
         this.finalStack = this.chosenGame["valueArray"][this.chosenGame["valueArray"].length-1];
         this.finalChange = this.finalStack - this.chosenGame["valueArray"][0];
-      } catch {
-        console.log("No games found!");
-      }
-    });
-  }
-
-  ionViewDidEnter() {
-    Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
+      }, 100);
+    } catch {
+      console.log("No games found!");
+    };
 
     this.slides.lockSwipes(true);
 
@@ -219,6 +226,8 @@ export class HistoryPage implements OnInit {
     };
 
     this.slides.lockSwipes(true);
+
+    this.frame.scrollToTop(300);
   }
 
   selectGame(ind) {
@@ -260,6 +269,41 @@ export class HistoryPage implements OnInit {
         this.bestWin = arr[i];
       };
     };
+  }
+
+  showRenameInput() {
+    this.oldNameText.nativeElement.style.display = "none";
+    this.newNameText.nativeElement.style.display = "flex";
+  }
+
+  renameGame() {
+    var newName = this.nameInput.value;
+    var oldName = this.chosenGame.name;
+
+    var data = [this.chosenGame["valueArray"],
+    this.chosenGame["changeArray"],
+    this.chosenGame["takeArray"],
+    this.chosenGame["peakStack"],
+    this.chosenGame["avgChange"],
+    this.chosenGame["bestWin"],
+    this.chosenGame["preFolds"],
+    this.chosenGame["potsWon"]]
+    
+    this.gameService.addToGames(`${newName}`,this.chosenGame.curr, data); //Makes copy of chosen game in firebase
+    
+    setTimeout(() => {
+      this.oldNameText.nativeElement.style.display = "flex";
+      this.newNameText.nativeElement.style.display = "none";
+
+      for (let i = 0; i < Object.keys(this.userGameHistory).length; i++) {
+        if (this.userGameHistory[i].name === newName) {
+          this.selectGame(i);
+          break;
+        };
+      };
+    }, 100);
+
+    this.gameService.deleteGame(oldName);
   }
 
   routeTo(dest) {

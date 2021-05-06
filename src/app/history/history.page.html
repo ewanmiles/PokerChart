@@ -23,7 +23,20 @@
     </ion-slide>
 
     <ion-slide id="viewed" *ngIf="this.chosenGame">
-      <h1>{{ this.chosenGame.name }}</h1>
+      <div class="flex center" #oldName>
+        <h1>{{ this.chosenGame.name }}</h1>
+        <ion-button (click)="showRenameInput()" class="rename">
+          <ion-icon name="pencil-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+      <div class="flex center" style="display: none" #newName>
+        <ion-input class="newName" value={{this.chosenGame.name}} #nameInput></ion-input>
+        <ion-button (click)="renameGame()" class="rename">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </div>
+      
 
       <ion-button class="back">
         <ion-icon name="arrow-back-outline"></ion-icon>

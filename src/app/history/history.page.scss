@@ -25,6 +25,24 @@ span {
     }
 }
 
+.center {
+    justify-content: center;
+    text-align: center;
+}
+
+.rename {
+    --padding-start: 1vw;
+    --padding-end: none;
+    margin: 2vh 0 0;
+}
+
+.newName {
+    font-size: 26px;
+    border-bottom: solid 1px var(--ion-color-primary);
+    --padding-bottom: 0;
+    flex: 0.8;
+}
+
 .percent {
     font-size: 3vh;
     width: 100%;
