@@ -1,0 +1,52 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Create Game</h1>
+  </div>
+
+  <div class="center-page">
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input #pass></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Join as</ion-label>
+      <ion-input placeholder="Name" #username></ion-input>
+    </ion-item>
+  </div>
+
+  <div #buyScreen class="add-buy">
+    <ion-input class="buy" #name placeholder="Game name" (ionChange)="removeSlash($event)"></ion-input>
+
+    <ion-segment #currency 
+    mode="ios" 
+    class="buy" 
+    color="primary"
+    (ionChange)="selectCurrency()">
+      <ion-segment-button value="£">
+        <ion-label>£</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="$">
+        <ion-label>$</ion-label>
+      </ion-segment-button>
+      
+      <ion-segment-button value="€">
+        <ion-label>€</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div class="flex">
+      <p class="curr-sign">{{ this.curr }}</p>
+      <ion-input class="buy curr" #buy placeholder="Buy-in"></ion-input>
+    </div>
+
+    <div class="flex error" #buyError>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Please enter a number for your buy-in!</p>
+    </div>
+  </div>
+
+  <ion-button (click)="this.buildRoom()">Start game</ion-button>
+</ion-content>

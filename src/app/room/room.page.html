@@ -1,0 +1,95 @@
+<ion-content *ngIf="this.roomData">
+  <div #head>
+    <h1 class="head">{{ this.roomData.name }}</h1>
+    <h2>Room Key: {{this.routerData.roomID }}</h2>
+  </div>
+
+  <h3>Players</h3>
+  <div class="users">
+    <h3 #names *ngFor="let u of this.roomData.usernames">{{ u }}</h3>
+  </div>
+
+  <div #buttons class="flex buttons">
+    <ion-button class="loss" (click)="showInput('loss')">Loss</ion-button>
+    <ion-button class="gain" (click)="showInput('gain')">Gain</ion-button>
+  </div>
+
+  <div id="hidden">
+    <ion-input
+    #take
+    class="change"
+    inputmode="decimal"
+    name="change">
+    </ion-input>
+  
+    <div class="submit">
+      <ion-button #submit (click)="submitChange()">Submit {{ this.changeType }}</ion-button>
+    </div>
+  
+    <div class="flex error" #changeError>
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <p>Not a valid {{ this.changeType }}, please enter a number</p>
+    </div>
+  </div>
+
+  <div #slide class="slide-down">
+    <h2>Current stack size</h2>
+    <h2>{{ this.roomData.curr }}{{ this.stackSize }}</h2>
+
+    <div class="flex percent" 
+    [style.color]="this.percChange > 0 ? 'var(--ion-color-success)' :
+                      this.percChange < 0 ? 'var(--ion-color-danger)' :
+                      'var(--ion-color-light-contrast)'">
+
+      <ion-icon name="caret-up-outline" *ngIf="this.percChange > 0"></ion-icon>
+      <ion-icon name="caret-down-outline" *ngIf="this.percChange < 0"></ion-icon>
+      <ion-icon name="remove-outline" *ngIf="this.percChange === 0"></ion-icon>
+
+      <h3>({{ this.percChange.toFixed(1) }}%)</h3>
+    </div>
+
+    <div class="flex undo">
+      <ion-button (click)="undoLastMove()"><ion-icon name="refresh-outline"></ion-icon> Undo last move</ion-button>
+    </div>
+
+    <div class="graph">
+      <h3 class="subtitle">Stack Size vs. Hand Number</h3>
+      <canvas #stackChart></canvas>
+
+      <h4 *ngIf="this.myData">Peak stack size: {{ this.roomData.curr }}{{ this.myData.peakStack.toFixed(2) }}</h4>
+    </div>
+
+    <div class="graph">
+      <h3 class="subtitle">Stack Change (increase/decrease) vs. Hand Number</h3>
+      <canvas #changeChart></canvas>
+
+      <h4 *ngIf="this.myData">Average change per hand: {{ this.roomData.curr }}{{ this.myData.avgChange.toFixed(2) }}</h4>
+    </div>
+
+    <div class="graph">
+      <h3 class="subtitle" *ngIf="this.takeNumber === 0">Top Takes</h3>
+      <h3 class="subtitle" *ngIf="this.takeNumber === 1">Top Take</h3>
+      <h3 class="subtitle" *ngIf="this.takeNumber > 1">Top {{ this.takeNumber }} Takes</h3>
+      <canvas #takeChart></canvas>
+
+      <ng-container *ngIf="this.myData">
+        <h4 *ngIf="this.myData.takeArray.length > 0">Best win: {{ this.roomData.curr }}{{ this.myData.takeArray[0].toFixed(2) }}</h4>
+      </ng-container>
+    </div>
+
+    <div class="graph">
+      <h3 class="subtitle">More stats</h3>
+
+      <table class="moreStats">
+        <tbody>
+          <tr> <td>Total Stack Change</td> <td>{{ this.roomData.curr }}{{ this.totalChange.toFixed(2) }}</td> </tr>
+          <tr *ngIf="this.myData"> <td>Off-Blind Pre-flop Folds</td> <td>{{ this.myData.preFolds }}</td> </tr>
+          <tr> <td>Total Hands</td> <td>{{ this.hand }}</td> </tr>
+          <tr *ngIf="this.myData"> <td>Pots Won</td> <td>{{ this.myData.potsWon }} ({{ this.potPerc.toFixed(2) }}%)</td> </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ion-button class="toHistory" (click)="this.leaveRoom()">End Game</ion-button>
+  </div>
+</ion-content>

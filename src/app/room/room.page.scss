@@ -1,0 +1,100 @@
+.head {
+    font-size: 32px;
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.users {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90vw;
+    border: solid 1px var(--ion-color-primary);
+    border-radius: 20px;
+    margin: 0 auto;
+
+    h3 {
+        font-size: 2.7vh;
+        margin: 10px 15px 5px;
+        padding: 5px
+    }
+}
+
+.loss {
+    --background: var(--ion-color-danger);
+    --background-activated: var(--ion-color-danger-shade);
+    font-size: 3vh;
+}
+
+.gain {
+    --background: var(--ion-color-success);
+    --background-activated: var(--ion-color-success-shade);
+    font-size: 3vh;
+}
+
+ion-input.change {
+    font-size: 2.5vh;
+    width: 80%;
+    margin: 0 auto;
+    border: solid 2px var(--ion-color-primary);
+    border-radius: 10px;
+    --padding-start: 5px;
+    margin-top: 2vh;
+}
+
+.submit {
+    margin-top: 1vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+  
+.error {
+    color: var(--ion-color-danger);
+    margin-top: 20px;
+    display: none;
+  
+    width: 100%;
+    justify-content: center; //When displayed, flexbox, this centers elements
+  
+    p {
+      margin: 0 0 0 5px;
+    }
+  
+    ion-icon {
+      padding-top: 2px;
+    }
+}
+
+.subtitle {
+    font-size: 2.6vh;
+    padding-left: 10px;
+}
+  
+h2 {
+    text-align: center;
+}
+
+h4 {
+    padding-left: 10px;
+    color: var(--ion-color-dark-tint);
+}
+
+
+.graph {
+    border-top: solid 2px var(--ion-color-primary);
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.moreStats {
+    width: 95vw;
+    margin-left: 3vw;
+  
+    tr {
+      height: 4vh;
+      border-bottom: solid 1px var(--ion-color-primary);
+    }
+}

@@ -1,0 +1,30 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Join Game</h1>
+  </div>
+
+  <div class="center-page">
+    <ion-item>
+      <ion-label>Room Key</ion-label>
+      <ion-input #key></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input #pass></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Join as</ion-label>
+      <ion-input placeholder="Name" #username></ion-input>
+    </ion-item>
+  </div>
+
+  <div class="flex error" #error>
+    <ion-icon name="alert-circle-outline"></ion-icon>
+    <p #errorMsg></p>
+  </div>
+
+  <ion-button (click)="this.joinGame()">Join game</ion-button>
+</ion-content>

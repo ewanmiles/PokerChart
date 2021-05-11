@@ -10,6 +10,14 @@
         Start a new game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
       </ion-button>
 
+      <ion-button (click)="this.routeTo('create')">
+        Start a group game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="this.routeTo('join')">
+        Join a group game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+      </ion-button>
+
       <span #noGames class="hide">No games found! Start one to see your game history.</span>
 
       <ion-list>
