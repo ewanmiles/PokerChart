@@ -12,6 +12,7 @@ import { Chart,
 
 import { GameService } from '../services/game/game.service';
 import { AuthService } from '../services/auth/auth.service';
+import firebase from 'firebase/app';
 import { IonContent, IonInput, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -47,6 +48,9 @@ export class HistoryPage implements OnInit {
   finalChange: number = 0;
   potPerc: number = 0;
 
+  uid: string;
+  userDetails;
+
   constructor(
     private gameService: GameService,
     private authService: AuthService,
@@ -54,8 +58,14 @@ export class HistoryPage implements OnInit {
     ) {}
 
   ngOnInit() {
+    this.uid = firebase.auth().currentUser.uid;
+
     this.gameService.getGames().subscribe(res => {
       this.userGameHistory = res;
+    });
+
+    this.authService.getUserDetails(this.uid).subscribe(res => {
+      this.userDetails = res;
     });
   }
 

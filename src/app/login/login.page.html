@@ -16,6 +16,8 @@
 
   <div #register>
     <form class="form" [formGroup]='signupForm' (ngSubmit)='onSubmit()'>
+      <h1>First Name (or Full Name)</h1>
+      <ion-input type="text" formControlName="name" placeholder="Aaron A Aaronson"></ion-input>
       <h1>Email</h1>
       <ion-input type="text" formControlName="email" placeholder="email@domain.com"></ion-input>
       <h1>Password</h1>
@@ -39,8 +41,6 @@
       <ion-button type="submit" (click)="onLogin()">Log in</ion-button>
     </div>
   </div>
-
-  <p>All history has been deleted to account for recent updates! (21/04)</p>
 
   <p *ngIf="this.error">{{ this.errorMsg }}</p>
 </ion-content>

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from "@angular/router";
 import { IonSegment } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,10 @@ export class LoginPage implements OnInit {
   error: boolean = false;
 
   signupForm = new FormGroup({
+    name: new FormControl("", [
+      Validators.required,
+      Validators.pattern("[a-zA-Z -]*")
+    ]),
     email: new FormControl("", [
       Validators.required,
       Validators.email,
@@ -37,6 +42,7 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private afs: AngularFirestore,
     private router: Router) { }
 
   ngOnInit() {}

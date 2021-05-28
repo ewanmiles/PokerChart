@@ -172,9 +172,14 @@ export class RoomPage implements OnInit {
 
   styleNames() {
     var els = Array.from(this.names);
-    els.forEach(element => {
+    setTimeout(() => { els.forEach(element => {
       element.nativeElement.style.color = `${this.valueData[element.nativeElement.innerHTML]["_color"]}`;
     });
+    }, 400);
+  }
+
+  ngOnChanges() {
+    console.log("Change registered");
   }
 
   formObservable(data) {

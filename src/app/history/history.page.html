@@ -6,7 +6,7 @@
         <h1>Game History</h1>
       </div>
 
-      <h3>Welcome back!</h3>
+      <h3 *ngIf="this.userDetails">Welcome back {{this.userDetails.name}}!</h3>
 
       <div class="games">
         <div class="col -left">
