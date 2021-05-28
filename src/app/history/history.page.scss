@@ -10,6 +10,7 @@ ion-slide {
 
 span {
     width: 90%;
+    margin-top: 2vh;
 }
 
 .flex {
@@ -67,12 +68,27 @@ ion-button {
     };
 }
 
+.games {
+    border-top: solid 2px var(--ion-color-primary);
+    display: flex;
+    height: 25vh;
+
+    .col {
+        width: 50%;
+
+        &.-left {
+            border-right: solid 1px var(--ion-color-primary);
+        }
+    }
+}
+
 .logout {
     color: var(--ion-color-danger);
 }
 
 ion-list {
     width: 95vw;
+    border-top: solid 2px var(--ion-color-primary);
 
     ion-item {
         --inner-border-width: 0;

@@ -7,6 +7,46 @@
     display: flex;
 }
 
+.center {
+    text-align: center;
+    margin: 0 auto 1vh;
+}
+
+.percent {
+    font-size: 3vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  
+    h3 {
+      margin: 0;
+      font-size: 2.4vh;
+    }
+  }
+
+.undo ion-button{
+color: var(--ion-color-primary);
+--background: transparent;
+--background-activated: transparent;
+text-transform: none;
+--box-shadow: none;
+font-size: 2.3vh;
+width: 100%;
+}
+
+
+ion-button {
+    text-transform: none;
+}
+
+ion-button.toHistory {
+    color: var(--ion-color-primary);
+    --background: transparent;
+    --background-activated: transparent;
+    --box-shadow: none;
+    width: 100%;
+}
+
 .users {
     display: flex;
     flex-wrap: wrap;
@@ -67,6 +107,16 @@ ion-input.change {
       padding-top: 2px;
     }
 }
+
+.slide-down {
+    border-top: solid 2px var(--ion-color-primary);
+    transition: 0.4s ease-out;
+    background-color: var(--ion-color-primary-contrast);
+    position: absolute;
+    width: 100vw;
+    z-index: 4;
+  }
+  
 
 .subtitle {
     font-size: 2.6vh;

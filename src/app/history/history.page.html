@@ -6,7 +6,27 @@
         <h1>Game History</h1>
       </div>
 
-      <ion-button (click)="this.routeTo('home')">
+      <h3>Welcome back!</h3>
+
+      <div class="games">
+        <div class="col -left">
+          <h3>Solo</h3>
+          <ion-button (click)="this.routeTo('home')">
+            New game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <div class="col">
+          <h3>Group</h3>
+          <ion-button (click)="this.routeTo('create')">
+            Create game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="this.routeTo('join')">
+            Join game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+      <!--ion-button (click)="this.routeTo('home')">
         Start a new game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
       </ion-button>
 
@@ -16,15 +36,15 @@
 
       <ion-button (click)="this.routeTo('join')">
         Join a group game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
-      </ion-button>
-
-      <span #noGames class="hide">No games found! Start one to see your game history.</span>
+      </ion-button-->
 
       <ion-list>
         <ion-item class="game" *ngFor="let game of this.userGameHistory; index as i" (click)="selectGame(i)">
           <ion-label>{{ game.name }}</ion-label>
         </ion-item>
       </ion-list>
+
+      <span #noGames class="hide">No games found! Start one to see your game history.</span>
 
       <ion-button class="logout" (click)="onLogout()">Log out</ion-button>
 

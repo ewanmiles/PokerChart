@@ -32,11 +32,12 @@ export class CreatePage implements OnInit {
   ionViewDidEnter() {
     this.currency.value = "£";
     this.name.value = "";
-    this.buy.value = "";
+    this.buy.value = this.curr;
   }
 
   buildRoom() {
-    this.buyIn = parseFloat(`${this.buy.value}`);
+    const newVal = `${this.buy.value}`.replace(this.curr,"");
+    this.buyIn = parseFloat(newVal);
 
     if (Number.isNaN(this.buyIn)) {
       this.buyError.nativeElement.style.display = "flex";
@@ -72,6 +73,7 @@ export class CreatePage implements OnInit {
 
   selectCurrency() {
     this.curr = this.currency.value;
+    this.buy.value = this.curr;
   }
 
   removeSlash(event) {
@@ -79,6 +81,14 @@ export class CreatePage implements OnInit {
 
     if (event.target.value.includes("/")) {
       event.target.value = newValue.slice(0,-1);
+    };
+  }
+
+  stopRemoveCurr(event) {
+    let newValue = event.target.value;
+    
+    if (!event.target.value.includes(this.curr)) {
+      event.target.value = this.curr + newValue
     };
   }
 

@@ -18,6 +18,7 @@ export class JoinPage implements OnInit {
   @ViewChild('errorMsg', { read: ElementRef }) errorMsg: ElementRef;
 
   initialRoomData;
+  dataToPass;
   uid;
 
   constructor(
@@ -31,7 +32,7 @@ export class JoinPage implements OnInit {
   }
 
   joinGame() {
-    this.roomService.joinRoom(this.key.value, this.pass.value, `${this.username.value}`).subscribe(res => {
+    const sub = this.roomService.joinRoom(this.key.value, this.pass.value, `${this.username.value}`).subscribe(res => {
       if (res === undefined) {
         this.errorMsg.nativeElement.innerHTML = "You have entered a key that doesn't exist, please enter a valid room key."
         this.error.nativeElement.style.display = "flex";
@@ -58,15 +59,20 @@ export class JoinPage implements OnInit {
           });
         };
 
-        let data = {
+        this.dataToPass = {
           state: {
             roomID: `${this.key.value}`,
           }
         };
 
-        this.routeWithDataTo('room',data);
+        //this.routeWithDataTo('room',data);
       };
     });
+
+    setTimeout(() => {
+      this.routeWithDataTo('room', this.dataToPass);
+      sub.unsubscribe();
+    }, 500);
   }
 
   routeWithDataTo(dest, data) {

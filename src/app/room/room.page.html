@@ -2,11 +2,11 @@
   <div #head>
     <h1 class="head">{{ this.roomData.name }}</h1>
     <h2>Room Key: {{this.routerData.roomID }}</h2>
-  </div>
 
-  <h3>Players</h3>
-  <div class="users">
-    <h3 #names *ngFor="let u of this.roomData.usernames">{{ u }}</h3>
+    <h3 class="center">Players</h3>
+    <div class="users">
+      <h3 #names *ngFor="let u of this.roomData.usernames">{{ u }}</h3>
+    </div>
   </div>
 
   <div #buttons class="flex buttons">
@@ -90,6 +90,6 @@
       </table>
     </div>
 
-    <ion-button class="toHistory" (click)="this.leaveRoom()">End Game</ion-button>
+    <ion-button class="toHistory" (click)="this.leaveRoom()">Leave Game</ion-button>
   </div>
 </ion-content>

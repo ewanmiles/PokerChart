@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInput, IonButton } from '@ionic/angular';
 import { RoomService } from '../services/room/room.service';
@@ -13,6 +13,7 @@ import { Chart,
   LinearScale, 
   Title, 
   CategoryScale } from 'chart.js';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-room',
@@ -25,6 +26,7 @@ export class RoomPage implements OnInit {
   @ViewChild('changeError', { read: ElementRef }) changeError: ElementRef;
 
   @ViewChild('slide', { read: ElementRef }) slideDown: ElementRef;
+  @ViewChild('head', { read: ElementRef }) head: ElementRef;
 
   @ViewChild('buttons', { read: ElementRef }) buttons: ElementRef;
   @ViewChild('submit') submit: IonButton;
@@ -64,6 +66,8 @@ export class RoomPage implements OnInit {
   changePoints;
   takePoints;
 
+  roomSub: Subscription;
+
   colorMap = {
     0: '#000000',
     1: '#FF0000',
@@ -81,7 +85,7 @@ export class RoomPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private roomService: RoomService,
-    private gameService: GameService
+    private gameService: GameService,
   ) { 
     this.uid = firebase.auth().currentUser.uid;
 
@@ -93,7 +97,7 @@ export class RoomPage implements OnInit {
   }
 
   ngOnInit() {
-    this.roomService.getRoom(this.routerData.roomID).subscribe(res => {
+    this.roomSub = this.roomService.getRoom(this.routerData.roomID).subscribe(res => {
       this.roomData = res;
       this.stackSize = this.roomData.buyIn; //Throws an error on close? Can't move this out of subscription
       this.stackSize = this.stackSize.toFixed(2);
@@ -117,6 +121,8 @@ export class RoomPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.positionSlide();
+
     let ind = this.roomData.users.indexOf(this.uid);
     let username = this.roomData.usernames[ind];
 
@@ -296,6 +302,13 @@ export class RoomPage implements OnInit {
      * arr (arr): Array of values to be averaged
     **/
     return arr.reduce((p,c) => p + c, 0)/arr.length;
+  }
+
+  positionSlide() {
+    var headTop = this.head.nativeElement.getBoundingClientRect().height;
+    var buttonsTop = this.buttons.nativeElement.getBoundingClientRect().height;
+
+    this.slideDown.nativeElement.style.top = `${headTop + buttonsTop + 27}px` //27 is manual positioning due to other content
   }
 
   showInput(type) {
@@ -491,21 +504,31 @@ export class RoomPage implements OnInit {
   }
 
   leaveRoom() {
-    let index = this.roomData.users.indexOf(this.uid);
-    console.log(this.roomData.users, this.uid, index);
-    this.roomData.users.pop(index);
-    this.roomData.usernames.pop(index);
+    let u = [];
+    let uN = [];
+    this.roomData.users.forEach(el => {
+      if (el != this.uid) {
+        u.push(el);
+      };
+    });
+    this.roomData.usernames.forEach(el => {
+      if (el != this.myData.username) {
+        uN.push(el);
+      };
+    });
 
-    console.log("REMOVED;", this.roomData.users, this.roomData.usernames);
-    
-    if (this.roomData.users.length > 0) {
-      console.log("Updating room users...");
-      this.roomService.updateRoomUsers(this.routerData.roomID, this.roomData.users, this.roomData.usernames);
+    console.log('Updating room users...');
+    console.log('User arrays:', u, uN);
+
+    if (u.length < 1) {
       this.routeTo('history');
+      this.roomSub.unsubscribe();
+      setTimeout(() => {this.roomService.closeRoom(this.routerData.roomID);}, 200);
     } else {
-      this.roomService.closeRoom(this.routerData.roomID);
       this.routeTo('history');
-    };
+      this.roomSub.unsubscribe();
+      this.roomService.updateRoomUsers(this.routerData.roomID, u, uN);
+    }
   }
 
   routeTo(dest) {
