@@ -1,0 +1,53 @@
+.title {
+    display: flex;
+    width: 90vw;
+    text-align: left;
+
+    img {
+        margin: 2.5vh 5px 5px;
+        height: 7vh;
+    };
+
+    h1 {
+        font-size: 4.5vh;
+    };
+}
+
+.flexcol {
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+        text-align: left;
+    }
+}
+
+.center {
+    justify-content: center;
+    text-align: center;
+}
+
+.rename {
+    --padding-start: 1vw;
+    --padding-end: none;
+    margin: 2vh 0 0;
+}
+
+.newName {
+    font-size: 26px;
+    border-bottom: solid 1px var(--ion-color-primary);
+    --padding-bottom: 0;
+    flex: 0.8;
+}
+
+ion-button {
+    color: var(--ion-color-primary);
+    --background: transparent;
+    --background-activated: transparent;
+    text-transform: none;
+    --box-shadow: none;
+
+    ion-icon {
+        margin-left: 5px;
+    };
+}

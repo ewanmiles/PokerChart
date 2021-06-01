@@ -39,6 +39,12 @@ ion-button {
     text-transform: none;
 }
 
+.buttons {
+    margin: 2.6vh auto 0;
+    width: 100%;
+    justify-content: center;
+}
+
 ion-button.toHistory {
     color: var(--ion-color-primary);
     --background: transparent;

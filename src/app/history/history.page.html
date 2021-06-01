@@ -8,6 +8,8 @@
 
       <h3 *ngIf="this.userDetails">Welcome back {{this.userDetails.name}}!</h3>
 
+      <ion-button (click)="this.routeTo('account')">Your Account</ion-button>
+
       <div class="games">
         <div class="col -left">
           <h3>Solo</h3>

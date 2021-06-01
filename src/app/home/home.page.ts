@@ -1,4 +1,4 @@
-import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
+import firebase from 'firebase/app';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInput, IonButton, IonContent, IonSegment } from '@ionic/angular';
@@ -11,8 +11,10 @@ import { Chart,
   LinearScale, 
   Title, 
   CategoryScale } from 'chart.js';
+import { AuthService } from '../services/auth/auth.service';
 
 import { GameService } from '../services/game/game.service';
+import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-home',
@@ -63,7 +65,9 @@ export class HomePage implements OnInit {
   potsWon: number = 0;
   potPerc: number = 0;
 
+  uid;
   userGameHistory;
+  userDetails;
   gameName: string | number = "";
   curr: string = "£";
 
@@ -73,12 +77,20 @@ export class HomePage implements OnInit {
 
   constructor(
     private gameService: GameService,
+    private authService: AuthService,
+    private usersService: UsersService,
     private router: Router,
-    ) {}
+    ) {
+      this.uid = firebase.auth().currentUser.uid;
+    }
 
   ngOnInit() {
     this.gameService.getGames().subscribe(res => {
       this.userGameHistory = res;
+    });
+
+    this.authService.getUserDetails(this.uid).subscribe(res => {
+      this.userDetails = res;
     });
   }
 
@@ -270,6 +282,9 @@ export class HomePage implements OnInit {
           this.preFolds,
           this.potsWon]);
           // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
+      
+      var oldGameNo = this.userDetails.games;
+      this.authService.updateGameNumber(this.uid, oldGameNo+1);
     }
   }
 
@@ -491,6 +506,19 @@ export class HomePage implements OnInit {
     if (event.target.value.includes("/")) {
       event.target.value = newValue.slice(0,-1);
     };
+  }
+
+  endGame() {
+    this.usersService.updateUserStats(
+      this.uid,
+      [
+        this.potsWon,
+        this.takeArray[0],
+        this.takeArray
+      ]
+    );
+    
+    this.routeTo('history');
   }
 
   routeTo(dest) {

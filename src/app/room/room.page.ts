@@ -14,6 +14,8 @@ import { Chart,
   Title, 
   CategoryScale } from 'chart.js';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth/auth.service';
+import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-room',
@@ -43,6 +45,7 @@ export class RoomPage implements OnInit {
   valueData;
   changeData;
   uid;
+  userDetails;
 
   observedValues;
 
@@ -86,6 +89,8 @@ export class RoomPage implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService,
     private gameService: GameService,
+    private authService: AuthService,
+    private usersService: UsersService
   ) { 
     this.uid = firebase.auth().currentUser.uid;
 
@@ -93,6 +98,10 @@ export class RoomPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.routerData = this.router.getCurrentNavigation().extras.state;
       }
+    });
+
+    this.authService.getUserDetails(this.uid).subscribe(res => {
+      this.userDetails = res;
     });
   }
 
@@ -176,10 +185,6 @@ export class RoomPage implements OnInit {
       element.nativeElement.style.color = `${this.valueData[element.nativeElement.innerHTML]["_color"]}`;
     });
     }, 400);
-  }
-
-  ngOnChanges() {
-    console.log("Change registered");
   }
 
   formObservable(data) {
@@ -313,7 +318,7 @@ export class RoomPage implements OnInit {
     var headTop = this.head.nativeElement.getBoundingClientRect().height;
     var buttonsTop = this.buttons.nativeElement.getBoundingClientRect().height;
 
-    this.slideDown.nativeElement.style.top = `${headTop + buttonsTop + 27}px` //27 is manual positioning due to other content
+    this.slideDown.nativeElement.style.top = `${headTop + buttonsTop + 38}px` //27 is manual positioning due to other content
   }
 
   showInput(type) {
@@ -509,6 +514,20 @@ export class RoomPage implements OnInit {
   }
 
   leaveRoom() {
+    this.usersService.updateUserStats(
+      this.uid,
+      [
+        this.myData.potsWon,
+        this.myData.takeArray[0],
+        [...this.myData.takeArray]
+      ]
+    );
+    
+    if (this.myData.takeArray.length > 0) {
+      var oldGameNo = this.userDetails.games;
+      this.authService.updateGameNumber(this.uid, oldGameNo+1);
+    };
+    
     let u = [];
     let uN = [];
     this.roomData.users.forEach(el => {

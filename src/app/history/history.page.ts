@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth/auth.service';
 import firebase from 'firebase/app';
 import { IonContent, IonInput, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-history',
@@ -54,6 +55,7 @@ export class HistoryPage implements OnInit {
   constructor(
     private gameService: GameService,
     private authService: AuthService,
+    private usersService: UsersService,
     private router: Router
     ) {}
 
@@ -261,8 +263,34 @@ export class HistoryPage implements OnInit {
     this.unlockAndSlide('next');
   }
 
+  updateNewStats() {
+    var pots = 0;
+    var lens = [];
+    var wins = [];
+    var hands = 0;
+
+    this.userGameHistory.forEach(el => {
+      pots += el.potsWon;
+      lens.push(el.takeArray.length);
+      wins.push(parseFloat(el.bestWin));
+      hands += el.takeArray.length;
+    });
+
+    let len = Math.max(...lens);
+    let win = Math.max(...wins);
+
+    return [len, win, pots, hands];
+  }
+
   deleteChosenGame() {
     this.gameService.deleteGame(this.chosenGame.name);
+
+    setTimeout(() => {
+      //Get new best win and longest game
+      let newData = this.updateNewStats();
+
+      this.usersService.deleteUserStats(this.uid,newData);
+    }, 200); //Wait a bit for the wins to update
 
     this.unlockAndSlide('prev');
 
@@ -271,6 +299,9 @@ export class HistoryPage implements OnInit {
         this.noGames.nativeElement.style.display = "block";
       };
     }, 50);
+
+    var oldGameNo = this.userDetails.games;
+    this.authService.updateGameNumber(this.uid, oldGameNo-1);
   }
 
   getBestWin(arr) {
