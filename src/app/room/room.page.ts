@@ -517,6 +517,7 @@ export class RoomPage implements OnInit {
     this.usersService.updateUserStats(
       this.uid,
       [
+        this.myData.curr,
         this.myData.potsWon,
         this.myData.takeArray[0],
         [...this.myData.takeArray]

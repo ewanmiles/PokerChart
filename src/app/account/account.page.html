@@ -4,36 +4,41 @@
     <h1>Your Account</h1>
   </div>
 
+  <ion-button (click)="this.routeTo('history')">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    Back to history
+  </ion-button>
+
   <ng-container *ngIf="this.userDetails">
-    <div class="flex center" #oldName>
-      <h1>{{ this.userDetails.name }}</h1>
-      <ion-button (click)="showRenameInput()" class="rename">
-        <ion-icon name="pencil-outline"></ion-icon>
-      </ion-button>
-    </div>
-  
-    <div class="flex center" style="display: none" #newName>
-      <ion-input class="newName" value={{this.userDetails.name}} #nameInput></ion-input>
-      <ion-button (click)="renameGame()" class="rename">
-        <ion-icon name="checkmark-outline"></ion-icon>
-      </ion-button>
-    </div>
+    <div class="bordered">
+      <div class="flex center" #oldName>
+        <h1>{{ this.userDetails.name }}</h1>
+        <ion-button (click)="showRenameInput()" class="rename">
+          <ion-icon name="pencil-outline"></ion-icon>
+        </ion-button>
+      </div>
+    
+      <div class="flex center" style="display: none" #newName>
+        <ion-input class="newName" value={{this.userDetails.name}} #nameInput></ion-input>
+        <ion-button (click)="renameGame()" class="rename">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </div>
 
-    <h3>Number of games: {{ this.userDetails.games }}</h3>
+      <h3 class="center">Number of games: {{ this.userDetails.games }}</h3>
+    </div>
   </ng-container>
-
-  <ion-button (click)="this.routeTo('history')">Back to history</ion-button>
 
   <div class="flexcol" *ngIf="this.userDetails">
     <h1>{{ this.userDetails.name }}'s stats</h1>
 
-    <h2>Pot win ratio</h2>
-    <h2>{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h2>
+    <h2>Pot Win Ratio</h2>
+    <h3>{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h3>
 
     <h2>Biggest Ever Win</h2>
-    <h2>{{ this.userDetails.bestWin.toFixed(2) }}</h2>
+    <h3>{{ this.userDetails.curr }}{{ this.userDetails.bestWin.toFixed(2) }}</h3>
 
     <h2>Longest Game</h2>
-    <h2>{{ this.userDetails.longestGame }} hands</h2>
+    <h3>{{ this.userDetails.longestGame }} hands</h3>
   </div>
 </ion-content>

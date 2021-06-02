@@ -96,4 +96,8 @@ export class CreatePage implements OnInit {
     let navExtras: NavigationExtras = data;
     this.router.navigate([dest], navExtras);
   }
+
+  routeTo(dest) {
+    this.router.navigateByUrl(dest);
+  }
 }

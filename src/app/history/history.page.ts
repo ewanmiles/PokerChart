@@ -264,6 +264,7 @@ export class HistoryPage implements OnInit {
   }
 
   updateNewStats() {
+    var curr = '£';
     var pots = 0;
     var lens = [];
     var wins = [];
@@ -279,7 +280,13 @@ export class HistoryPage implements OnInit {
     let len = Math.max(...lens);
     let win = Math.max(...wins);
 
-    return [len, win, pots, hands];
+    this.userGameHistory.forEach(el => {
+      if (`${el.bestWin}` === `${win}`) {
+        curr = el.curr;
+      }
+    });
+
+    return [curr, len, win, pots, hands];
   }
 
   deleteChosenGame() {

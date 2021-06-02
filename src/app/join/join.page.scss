@@ -54,3 +54,15 @@ ion-input {
     justify-content: center;
     margin-top: 5vh;
 }
+
+ion-button.back {
+    color: var(--ion-color-primary);
+    --background: transparent;
+    --background-activated: transparent;
+    text-transform: none;
+    --box-shadow: none;
+
+    ion-icon {
+        margin-left: 5px;
+    };
+}

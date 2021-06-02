@@ -13,13 +13,30 @@
     };
 }
 
+.flex {
+    display: flex;
+}
+
+.bordered {
+    border-top: solid 2px var(--ion-color-primary);
+    border-bottom: solid 2px var(--ion-color-primary);
+}
+
 .flexcol {
     display: flex;
     flex-direction: column;
+    text-align: center;
 
     h2 {
-        text-align: left;
+        font-size: 2.7vh;
+        margin-bottom: 0;
+        color: var(--ion-color-primary-tint);
     }
+}
+
+h3 {
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
 
 .center {

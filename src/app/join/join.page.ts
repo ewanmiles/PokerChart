@@ -80,4 +80,8 @@ export class JoinPage implements OnInit {
     this.router.navigate([dest], navExtras);
   }
 
+  routeTo(dest) {
+    this.router.navigateByUrl(dest);
+  }
+
 }

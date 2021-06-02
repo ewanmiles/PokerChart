@@ -512,6 +512,7 @@ export class HomePage implements OnInit {
     this.usersService.updateUserStats(
       this.uid,
       [
+        this.curr,
         this.potsWon,
         this.takeArray[0],
         this.takeArray
