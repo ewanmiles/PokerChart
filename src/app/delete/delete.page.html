@@ -1,0 +1,29 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Delete Account</h1>
+  </div>
+
+  <ion-button class="back" (click)="this.routeTo('history')">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    Back to History
+  </ion-button>
+
+  <p>Are you sure you want to delete your account? 
+    Type your password in below to say goodbye. Note,
+    once deleted, your account will not be recoverable.</p>
+
+  <ion-input
+  #pass
+  class="password"
+  name="password">
+  </ion-input>
+
+  <div class="flex center">
+    <ion-button class="delete" (click)="deleteAccount()">Delete account</ion-button>
+  </div>
+
+  <p #incorrect class="error">
+    You have entered an incorrect password for this account.
+  </p>
+</ion-content>

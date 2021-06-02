@@ -54,7 +54,7 @@ span {
       margin: 0;
       font-size: 2.4vh;
     }
-  }
+}
 
 ion-button {
     color: var(--ion-color-primary);
@@ -84,6 +84,12 @@ ion-button {
 
 .logout {
     color: var(--ion-color-danger);
+}
+
+.delete {
+    color: #FFF;
+    --background: var(--ion-color-danger);
+    --background-activated: var(--ion-color-danger);
 }
 
 ion-list {

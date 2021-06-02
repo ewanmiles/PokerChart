@@ -29,16 +29,18 @@
     </div>
   </ng-container>
 
-  <div class="flexcol" *ngIf="this.userDetails">
-    <h1>{{ this.userDetails.name }}'s stats</h1>
+  <ng-container *ngIf="this.userDetails">
+    <div class="flexcol">
+      <h1>{{ this.userDetails.name }}'s stats</h1>
 
-    <h2>Pot Win Ratio</h2>
-    <h3>{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h3>
+      <h2>Pot Win Ratio</h2>
+      <h3>{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h3>
 
-    <h2>Biggest Ever Win</h2>
-    <h3>{{ this.userDetails.curr }}{{ this.userDetails.bestWin.toFixed(2) }}</h3>
+      <h2>Biggest Ever Win</h2>
+      <h3>{{ this.userDetails.curr }}{{ this.userDetails.bestWin.toFixed(2) }}</h3>
 
-    <h2>Longest Game</h2>
-    <h3>{{ this.userDetails.longestGame }} hands</h3>
-  </div>
+      <h2>Longest Game</h2>
+      <h3>{{ this.userDetails.longestGame }} hands</h3>
+    </div>
+  </ng-container>
 </ion-content>

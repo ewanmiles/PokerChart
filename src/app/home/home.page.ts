@@ -242,8 +242,6 @@ export class HomePage implements OnInit {
   }
 
   startGame() {
-    this.frame.scrollY = true;
-
     this.hand = 0;
     this.buyIn = parseFloat(`${this.buy.value}`);
 
@@ -256,6 +254,7 @@ export class HomePage implements OnInit {
     if (Number.isNaN(this.buyIn)) {
       this.buyError.nativeElement.style.display = "flex";
     } else {
+      this.frame.scrollY = true;
       this.buyError.nativeElement.style.display = "none";
 
       this.valueArray.push(this.buyIn);
@@ -498,6 +497,15 @@ export class HomePage implements OnInit {
 
   selectCurrency() {
     this.curr = this.currency.value;
+    this.buy.value = this.curr;
+  }
+
+  stopRemoveCurr(event) {
+    let newValue = event.target.value;
+    
+    if (!event.target.value.includes(this.curr)) {
+      event.target.value = this.curr + newValue
+    };
   }
 
   removeSlash(event) {

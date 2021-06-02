@@ -7,6 +7,11 @@
   </div>
 
   <div #buyScreen class="add-buy">
+    <ion-button class="back" (click)="this.routeTo('history')">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+      <p>Back to History</p>
+    </ion-button>
+
     <ion-input class="buy" #name placeholder="Game name" (ionChange)="removeSlash($event)"></ion-input>
 
     <ion-segment #currency 
@@ -27,9 +32,8 @@
       </ion-segment-button>
     </ion-segment>
 
-    <div class="flex">
-      <p class="curr-sign">{{ this.curr }}</p>
-      <ion-input class="buy curr" #buy placeholder="Buy-in"></ion-input>
+    <div>
+      <ion-input class="buy curr" #buy placeholder="Buy-in" (ionChange)="this.stopRemoveCurr($event)"></ion-input>
     </div>
 
     <div class="flex error" #buyError>
