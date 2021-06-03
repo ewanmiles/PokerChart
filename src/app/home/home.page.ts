@@ -89,7 +89,7 @@ export class HomePage implements OnInit {
       this.userGameHistory = res;
     });
 
-    this.authService.getUserDetails(this.uid).subscribe(res => {
+    this.usersService.getUserDetails(this.uid).subscribe(res => {
       this.userDetails = res;
     });
   }
@@ -243,7 +243,8 @@ export class HomePage implements OnInit {
 
   startGame() {
     this.hand = 0;
-    this.buyIn = parseFloat(`${this.buy.value}`);
+    const newVal = `${this.buy.value}`.replace(this.curr,"");
+    this.buyIn = parseFloat(newVal);
 
     if (this.name.value === "") {
       this.gameName = this.assignGameNumber()
@@ -283,7 +284,7 @@ export class HomePage implements OnInit {
           // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
       
       var oldGameNo = this.userDetails.games;
-      this.authService.updateGameNumber(this.uid, oldGameNo+1);
+      this.usersService.updateGameNumber(this.uid, oldGameNo+1);
     }
   }
 

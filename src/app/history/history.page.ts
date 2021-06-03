@@ -61,12 +61,13 @@ export class HistoryPage implements OnInit {
 
   ngOnInit() {
     this.uid = firebase.auth().currentUser.uid;
+    setTimeout(() => {console.log("USER:", this.uid)}, 200);
 
     this.gameService.getGames().subscribe(res => {
       this.userGameHistory = res;
     });
 
-    this.authService.getUserDetails(this.uid).subscribe(res => {
+    this.usersService.getUserDetails(this.uid).subscribe(res => {
       this.userDetails = res;
     });
   }
@@ -308,7 +309,7 @@ export class HistoryPage implements OnInit {
     }, 50);
 
     var oldGameNo = this.userDetails.games;
-    this.authService.updateGameNumber(this.uid, oldGameNo-1);
+    this.usersService.updateGameNumber(this.uid, oldGameNo-1);
   }
 
   getBestWin(arr) {

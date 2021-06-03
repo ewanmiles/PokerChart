@@ -100,7 +100,7 @@ export class RoomPage implements OnInit {
       }
     });
 
-    this.authService.getUserDetails(this.uid).subscribe(res => {
+    this.usersService.getUserDetails(this.uid).subscribe(res => {
       this.userDetails = res;
     });
   }
@@ -526,7 +526,7 @@ export class RoomPage implements OnInit {
     
     if (this.myData.takeArray.length > 0) {
       var oldGameNo = this.userDetails.games;
-      this.authService.updateGameNumber(this.uid, oldGameNo+1);
+      this.usersService.updateGameNumber(this.uid, oldGameNo+1);
     };
     
     let u = [];

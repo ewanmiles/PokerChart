@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from '../services/auth/auth.service';
 import firebase from 'firebase/app';
-import { GameService } from '../services/game/game.service';
 import { Router } from '@angular/router';
+import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-account',
@@ -22,13 +20,11 @@ export class AccountPage implements OnInit {
   potWinPerc: number;
 
   constructor(
-    private authSevice: AuthService,
-    private gameService: GameService,
-    private afs: AngularFirestore,
+    private usersService: UsersService,
     private router: Router
   ) { 
     this.uid = firebase.auth().currentUser.uid;
-    this.authSevice.getUserDetails(this.uid).subscribe(res => {
+    this.usersService.getUserDetails(this.uid).subscribe(res => {
       this.userDetails = res;
     });
   }
@@ -48,7 +44,7 @@ export class AccountPage implements OnInit {
     var newName = this.nameInput.value;
     var oldName = this.userDetails.name;
     
-    this.authSevice.changeName(newName, this.uid);
+    this.usersService.changeName(newName, this.uid);
     
     setTimeout(() => {
       this.oldNameText.nativeElement.style.display = "flex";
