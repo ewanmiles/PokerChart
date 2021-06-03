@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { RoomService } from '../services/room/room.service';
+import { RoomService } from '../services/index';
 import firebase from 'firebase/app';
 
 @Component({

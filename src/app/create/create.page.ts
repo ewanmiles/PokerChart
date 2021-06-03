@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router, NavigationExtras } from '@angular/router';
 import { IonInput, IonSegment } from '@ionic/angular';
-import { RoomService } from '../services/room/room.service';
+import { RoomService } from '../services/index';
 
 @Component({
   selector: 'app-create',

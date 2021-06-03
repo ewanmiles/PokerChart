@@ -10,12 +10,10 @@ import { Chart,
   Title, 
   CategoryScale } from 'chart.js';
 
-import { GameService } from '../services/game/game.service';
-import { AuthService } from '../services/auth/auth.service';
 import firebase from 'firebase/app';
 import { IonContent, IonInput, IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { UsersService } from '../services/users/users.service';
+import { GameService, AuthService, UsersService } from '../services/index';
 
 @Component({
   selector: 'app-history',

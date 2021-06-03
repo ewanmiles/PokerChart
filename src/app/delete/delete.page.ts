@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonInput } from '@ionic/angular';
-import { AuthService } from '../services/auth/auth.service';
+import { AuthService } from '../services/index';
 
 @Component({
   selector: 'app-delete',

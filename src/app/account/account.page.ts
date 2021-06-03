@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import firebase from 'firebase/app';
 import { Router } from '@angular/router';
-import { UsersService } from '../services/users/users.service';
+import { UsersService } from '../services/index';
 
 @Component({
   selector: 'app-account',

@@ -11,10 +11,7 @@ import { Chart,
   LinearScale, 
   Title, 
   CategoryScale } from 'chart.js';
-import { AuthService } from '../services/auth/auth.service';
-
-import { GameService } from '../services/game/game.service';
-import { UsersService } from '../services/users/users.service';
+import { AuthService, GameService, UsersService } from '../services/index';
 
 @Component({
   selector: 'app-home',

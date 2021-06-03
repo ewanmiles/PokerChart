@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInput, IonButton } from '@ionic/angular';
-import { RoomService } from '../services/room/room.service';
 import firebase from 'firebase/app';
-import { GameService } from '../services/game/game.service';
+import { GameService, AuthService, RoomService, UsersService } from '../services/index';
 import { Chart, 
   LineController, 
   BarController, 
@@ -14,8 +13,6 @@ import { Chart,
   Title, 
   CategoryScale } from 'chart.js';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth/auth.service';
-import { UsersService } from '../services/users/users.service';
 
 @Component({
   selector: 'app-room',
