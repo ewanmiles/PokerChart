@@ -1,0 +1,20 @@
+<div class="question-head">
+  <div>
+    <h2>{{ this.question.question }}</h2>
+  </div>
+
+  <div>
+    <ion-icon #show 
+    name="chevron-down-outline" 
+    (click)="this.showQuestion()"></ion-icon>
+
+    <ion-icon #hide 
+    name="chevron-up-outline" 
+    (click)="this.hideQuestion()"
+    style="display: none;"></ion-icon>
+  </div>
+</div>
+
+<div #answer style="display: none;" class="answer">
+  <p>{{ this.question.answer }}</p>
+</div>

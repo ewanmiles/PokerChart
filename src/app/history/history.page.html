@@ -9,6 +9,7 @@
       <h3 *ngIf="this.userDetails">Welcome back {{this.userDetails.name}}!</h3>
 
       <ion-button (click)="this.routeTo('account')">Your Account</ion-button>
+      <ion-button (click)="this.routeTo('help')">How does this darn thing work?</ion-button>
 
       <div class="games">
         <div class="col -left">
@@ -28,17 +29,6 @@
           </ion-button>
         </div>
       </div>
-      <!--ion-button (click)="this.routeTo('home')">
-        Start a new game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button (click)="this.routeTo('create')">
-        Start a group game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
-      </ion-button>
-
-      <ion-button (click)="this.routeTo('join')">
-        Join a group game <ion-icon name="arrow-forward-circle-outline"></ion-icon>
-      </ion-button-->
 
       <ion-list>
         <ion-item class="game" *ngFor="let game of this.userGameHistory; index as i" (click)="selectGame(i)">

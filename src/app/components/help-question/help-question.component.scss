@@ -1,0 +1,28 @@
+.question-head {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    border-bottom: solid 1px var(--ion-color-dark-tint);
+    margin: 0 auto;
+    padding: 10px;
+
+    h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 3.2vh;
+    }
+
+    ion-icon {
+        font-size: 4vh;
+        color: var(--ion-color-primary);
+    }
+}
+
+.answer {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px;
+    border-top: solid 1px var(--ion-color-dark-tint);
+    border-bottom: solid 1px var(--ion-color-primary);
+}

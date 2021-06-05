@@ -1,0 +1,26 @@
+.title {
+    display: flex;
+    width: 90vw;
+    text-align: left;
+
+    img {
+        margin: 2.5vh 5px 5px;
+        height: 7vh;
+    };
+
+    h1 {
+        font-size: 4.5vh;
+    };
+}
+
+ion-button.back {
+    color: var(--ion-color-primary);
+    --background: transparent;
+    --background-activated: transparent;
+    text-transform: none;
+    --box-shadow: none;
+  
+    ion-icon {
+        margin-left: 5px;
+    };
+}

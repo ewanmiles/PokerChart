@@ -1,0 +1,13 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Help</h1>
+  </div>
+
+  <ion-button class="back" (click)="this.routeTo('history')">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    Back to History
+  </ion-button>
+
+  <app-help-question *ngFor="let q of this.QandAs" [question]="q"></app-help-question>
+</ion-content>

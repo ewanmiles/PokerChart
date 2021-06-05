@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'delete',
     loadChildren: () => import('./delete/delete.module').then( m => m.DeletePageModule)
   },
+  {
+    path: 'help',
+    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule)
+  },
 ];
 
 @NgModule({
