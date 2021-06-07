@@ -18,9 +18,16 @@
     <form class="form" [formGroup]='signupForm' (ngSubmit)='onSubmit()'>
       <h1>First Name (or Full Name)</h1>
       <ion-input type="text" formControlName="name" placeholder="Aaron A Aaronson"></ion-input>
+
+      <h1>User Tag</h1>
+      <p class="tip">Like with Twitter, other users can find you using your tag.</p>
+      <ion-input type="text" formControlName="tag" placeholder="aaronthedon"></ion-input>
+
       <h1>Email</h1>
-      <ion-input type="text" formControlName="email" placeholder="email@domain.com"></ion-input>
+      <ion-input type="text" formControlName="email" placeholder="aaron@aaronmail.com"></ion-input>
+
       <h1>Password</h1>
+      <p class="tip">Min length 8 characters.</p>
       <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
     </form>
 
@@ -33,8 +40,10 @@
     <form class="form" [formGroup]='loginForm' (ngSubmit)='onLogin()'>
       <h1>Email</h1>
       <ion-input type="text" formControlName="email" placeholder="email@domain.com"></ion-input>
+
       <h1>Password</h1>
       <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+      <p class="tip" (click)="this.routeTo('forgot')">Forgot your password?</p>
     </form>
 
     <div class="flex">

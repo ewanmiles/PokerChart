@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Reset Password</h1>
+  </div>
+
+  <p>Input the new password you would like to use for the account.</p>
+
+  <ion-input
+  #password
+  class="password"
+  name="password"
+  placeholder="New password">
+  </ion-input>
+
+  <div class="flex">
+    <ion-button (click)="this.resetPass()">Continue</ion-button>
+  </div>
+
+  <p #error style="display: none;">Something went wrong. It's likely that the reset URL has expired - please go back to <a href="pokerchart.co.uk/login">login</a> and try again.</p>
+  <p #weak style="display: none;">Please add a new password of at least 8 characters.</p>
+</ion-content>

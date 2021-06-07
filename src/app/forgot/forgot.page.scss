@@ -1,0 +1,50 @@
+.title {
+    display: flex;
+    width: 90vw;
+    text-align: left;
+
+    img {
+        margin: 2.5vh 5px 5px;
+        height: 7vh;
+    };
+
+    h1 {
+        font-size: 4.5vh;
+    };
+}
+
+p {
+    width: 90%;
+    margin: 15px auto;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+
+    ion-button {
+        margin: 20px;
+    }
+}
+
+ion-button.back {
+    color: var(--ion-color-primary);
+    --background: transparent;
+    --background-activated: transparent;
+    text-transform: none;
+    --box-shadow: none;
+  
+    ion-icon {
+        margin-left: 5px;
+    };
+}
+
+ion-input.email {
+    font-size: 2.5vh;
+    width: 80%;
+    margin: 0 auto;
+    border: solid 2px var(--ion-color-primary);
+    border-radius: 10px;
+    --padding-start: 5px;
+    margin-top: 2vh;
+}

@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from "@angular/router";
 import { IonSegment } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +19,10 @@ export class LoginPage implements OnInit {
 
   signupForm = new FormGroup({
     name: new FormControl("", [
+      Validators.required,
+      Validators.pattern("[a-zA-Z -]*")
+    ]),
+    tag: new FormControl("", [
       Validators.required,
       Validators.pattern("[a-zA-Z -]*")
     ]),
@@ -42,8 +45,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private afs: AngularFirestore,
-    private router: Router) { }
+    private router: Router
+    ) {}
 
   ngOnInit() {}
 
@@ -103,4 +106,7 @@ export class LoginPage implements OnInit {
     }
   }
 
+  routeTo(dest) {
+    this.router.navigateByUrl(dest);
+  }
 }

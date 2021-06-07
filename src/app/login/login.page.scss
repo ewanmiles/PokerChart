@@ -48,3 +48,10 @@ p {
     margin: 5px auto 0;
     color: var(--ion-color-danger);
 }
+
+p.tip {
+    width: auto;
+    margin: auto auto 1.2vh;
+    color: var(--ion-color-tertiary-tint);
+    font-size: 1.8vh;
+}

@@ -58,15 +58,21 @@ export class HistoryPage implements OnInit {
     ) {}
 
   ngOnInit() {
-    this.uid = firebase.auth().currentUser.uid;
-    setTimeout(() => {console.log("USER:", this.uid)}, 200);
+    firebase.auth().onAuthStateChanged(user => { 
+      if (user) {
+        this.uid = user.uid; 
+        console.log("USER:", this.uid)
 
-    this.gameService.getGames().subscribe(res => {
-      this.userGameHistory = res;
-    });
-
-    this.usersService.getUserDetails(this.uid).subscribe(res => {
-      this.userDetails = res;
+        this.gameService.getGames().subscribe(res => {
+          this.userGameHistory = res;
+        });
+    
+        this.usersService.getUserDetails(this.uid).subscribe(res => {
+          this.userDetails = res;
+        });
+      } else {
+        this.routeTo('login');
+      }
     });
   }
 
@@ -74,31 +80,29 @@ export class HistoryPage implements OnInit {
     Chart.register(LineController, BarController, LineElement, BarElement, PointElement, LinearScale, Title, CategoryScale);
 
     try {
-      setTimeout(() => {
-        this.chosenGame = this.userGameHistory[Object.keys(this.userGameHistory)[0]];
+      this.chosenGame = this.userGameHistory[Object.keys(this.userGameHistory)[0]];
 
-        this.handArray = [];
+      this.handArray = [];
 
-        for (const [index] of this.chosenGame["valueArray"].entries()) {
-          this.handArray.push(index);
-        };
+      for (const [index] of this.chosenGame["valueArray"].entries()) {
+        this.handArray.push(index);
+      };
 
-        this.getBestWin(this.chosenGame["takeArray"]);
+      this.getBestWin(this.chosenGame["takeArray"]);
 
-        this.finalStack = this.chosenGame["valueArray"][this.chosenGame["valueArray"].length-1];
-        this.finalChange = this.finalStack - this.chosenGame["valueArray"][0];
-      }, 100);
+      this.finalStack = this.chosenGame["valueArray"][this.chosenGame["valueArray"].length-1];
+      this.finalChange = this.finalStack - this.chosenGame["valueArray"][0];
+
+      if (this.userGameHistory.length === 0) {
+        this.noGames.nativeElement.style.display = "block";
+      } else {
+        this.noGames.nativeElement.style.display = "none";
+      };
     } catch {
       console.log("No games found!");
     };
 
     this.slides.lockSwipes(true);
-
-    if (this.userGameHistory.length === 0) {
-      this.noGames.nativeElement.style.display = "block";
-    } else {
-      this.noGames.nativeElement.style.display = "none";
-    };
   }
 
   updatePoints() {

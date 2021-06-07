@@ -1,0 +1,28 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>Forgot Password</h1>
+  </div>
+
+  <ion-button class="back" (click)="this.routeTo('login')">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    Back
+  </ion-button>
+
+  <p>Enter the email of the account you'd like to reset the password for.</p>
+
+  <ion-input
+  #email
+  class="email"
+  name="email"
+  placeholder="email@domain.com">
+  </ion-input>
+
+  <div class="flex">
+    <ion-button (click)="this.sendReset()">Send Email</ion-button>
+  </div>
+
+  <p #success style="display: none;">Email sent! Don't forget to check your junk mail as it may end up there.</p>
+  <p #fail style="display: none;">Sorry, something went wrong. Try again later.</p>
+  <p #incorrect style="display: none;">We could not find an account linked to that email. Check your input and try again.</p>
+</ion-content>
