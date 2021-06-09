@@ -26,10 +26,16 @@
       </div>
 
       <div class="flex center">
+        <h2 class="tag">@{{ this.userDetails.tag }}</h2>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container> <!--ngif this user is currentUser -->
+    <div class="bordered-bottom">
+      <div class="flex center">
         <ion-button (click)="this.routeTo('forgot')">Change password</ion-button>
       </div>
-
-      <h3 class="center">Number of games: {{ this.userDetails.games }}</h3>
     </div>
   </ng-container>
 
@@ -37,8 +43,11 @@
     <div class="flexcol">
       <h1>{{ this.userDetails.name }}'s stats</h1>
 
+      <h2>Games Played</h2>
+      <h3>{{ this.userDetails.games }}</h3>
+
       <h2>Pot Win Ratio</h2>
-      <h3>{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h3>
+      <h3 *ngIf="this.userDetails">{{ this.potWinPerc.toFixed(2) }}% ({{ this.userDetails.potsWon }}/{{ this.userDetails.handsPlayed }})</h3>
 
       <h2>Biggest Ever Win</h2>
       <h3>{{ this.userDetails.curr }}{{ this.userDetails.bestWin.toFixed(2) }}</h3>

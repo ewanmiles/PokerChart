@@ -91,7 +91,7 @@ export class RoomPage implements OnInit {
   ) { 
     this.uid = firebase.auth().currentUser.uid;
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.routerData = this.router.getCurrentNavigation().extras.state;
       }

@@ -22,6 +22,10 @@
     border-bottom: solid 2px var(--ion-color-primary);
 }
 
+.bordered-bottom {
+    border-bottom: solid 2px var(--ion-color-primary);
+}
+
 .flexcol {
     display: flex;
     flex-direction: column;
@@ -32,6 +36,12 @@
         margin-bottom: 0;
         color: var(--ion-color-primary-tint);
     }
+}
+
+h2.tag {
+    font-size: 2.2vh;
+    margin-top: 0;
+    color: var(--ion-color-tertiary);
 }
 
 h3 {

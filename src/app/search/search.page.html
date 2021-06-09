@@ -1,0 +1,18 @@
+<ion-content>
+  <div class="title">
+    <img src="../../assets/icon/pokericon.png">
+    <h1>User Search</h1>
+  </div>
+
+  <ion-button (click)="this.routeTo('history')">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+    Back to history
+  </ion-button>
+
+  <ion-input (ionChange)="this.searchForUsers($event)" placeholder="Enter a user tag"></ion-input>
+
+  <p *ngFor="let tag of this.foundTags" (click)="this.goToAcct(tag)">
+    <ion-icon name="person"></ion-icon>
+    {{ tag }}
+  </p>
+</ion-content>

@@ -12,7 +12,7 @@ import { Chart,
 
 import firebase from 'firebase/app';
 import { IonContent, IonInput, IonSlides } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { GameService, AuthService, UsersService } from '../services/index';
 
 @Component({
@@ -49,6 +49,8 @@ export class HistoryPage implements OnInit {
 
   uid: string;
   userDetails;
+
+  userToView;
 
   constructor(
     private gameService: GameService,
@@ -357,8 +359,23 @@ export class HistoryPage implements OnInit {
     this.gameService.deleteGame(oldName);
   }
 
+  goToAcct(value) {
+    this.userToView = {
+      state: {
+        tag: `${value}`
+      }
+    };
+
+    this.routeWithDataTo('account', this.userToView);
+  }
+
   routeTo(dest) {
     this.router.navigateByUrl(dest);
+  }
+
+  routeWithDataTo(dest, data) {
+    let navExtras: NavigationExtras = data;
+    this.router.navigate([dest], navExtras);
   }
 
   onLogout() {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import firebase from 'firebase/app';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../services/index';
 
 @Component({
@@ -19,20 +19,29 @@ export class AccountPage implements OnInit {
   gameNumber: number;
   potWinPerc: number;
 
+  routerData;
+
   constructor(
     private usersService: UsersService,
-    private router: Router
-  ) { 
-    this.uid = firebase.auth().currentUser.uid;
-    this.usersService.getUserDetails(this.uid).subscribe(res => {
-      this.userDetails = res;
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.routerData = this.router.getCurrentNavigation().extras.state;
+      }
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    let ss = await this.usersService.findUserUID(this.routerData.tag);
+    this.uid = ss[0];
 
-  ionViewDidEnter() {
-    this.potWinPerc = (this.userDetails.potsWon/this.userDetails.handsPlayed)*100;
+    this.usersService.getUserDetails(this.uid).subscribe(res => {
+      console.log("Subscribing to user details.");
+      this.userDetails = res;
+      this.potWinPerc = (this.userDetails.potsWon/this.userDetails.handsPlayed)*100
+    });
   }
 
   showRenameInput() {

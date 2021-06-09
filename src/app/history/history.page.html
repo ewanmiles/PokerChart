@@ -8,8 +8,9 @@
 
       <h3 *ngIf="this.userDetails">Welcome {{this.userDetails.name}}!</h3>
 
-      <ion-button (click)="this.routeTo('account')">Your Account</ion-button>
+      <ion-button (click)="this.goToAcct(this.userDetails.tag)">Your Account</ion-button>
       <ion-button (click)="this.routeTo('help')">How does this darn thing work?</ion-button>
+      <ion-button (click)="this.routeTo('search')">Search for a user</ion-button>
 
       <div class="games">
         <div class="col -left">

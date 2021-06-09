@@ -64,8 +64,6 @@ export class JoinPage implements OnInit {
             roomID: `${this.key.value}`,
           }
         };
-
-        //this.routeWithDataTo('room',data);
       };
     });
 
