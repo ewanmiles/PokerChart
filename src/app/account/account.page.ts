@@ -14,7 +14,8 @@ export class AccountPage implements OnInit {
   @ViewChild('newName', { read: ElementRef }) newNameText: ElementRef;
   @ViewChild('nameInput') nameInput: IonInput;
 
-  uid: string;
+  viewUid: string;
+  userUid: string;
   userDetails;
   gameNumber: number;
   potWinPerc: number;
@@ -34,10 +35,17 @@ export class AccountPage implements OnInit {
   }
 
   async ngOnInit() {
-    let ss = await this.usersService.findUserUID(this.routerData.tag);
-    this.uid = ss[0];
+    firebase.auth().onAuthStateChanged(user => { 
+      if (user) {
+        this.userUid = user.uid; 
+        console.log("USER:", this.userUid)
+      }
+    });
 
-    this.usersService.getUserDetails(this.uid).subscribe(res => {
+    let ss = await this.usersService.findUserUID(this.routerData.tag);
+    this.viewUid = ss[0];
+
+    this.usersService.getUserDetails(this.viewUid).subscribe(res => {
       console.log("Subscribing to user details.");
       this.userDetails = res;
       this.potWinPerc = (this.userDetails.potsWon/this.userDetails.handsPlayed)*100
@@ -53,7 +61,7 @@ export class AccountPage implements OnInit {
     var newName = this.nameInput.value;
     var oldName = this.userDetails.name;
     
-    this.usersService.changeName(newName, this.uid);
+    this.usersService.changeName(newName, this.viewUid);
     
     setTimeout(() => {
       this.oldNameText.nativeElement.style.display = "flex";

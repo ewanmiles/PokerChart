@@ -24,7 +24,8 @@ export class LoginPage implements OnInit {
     ]),
     tag: new FormControl("", [
       Validators.required,
-      Validators.pattern("[a-zA-Z -]*")
+      Validators.pattern("[a-zA-Z -]*"),
+      Validators.minLength(2)
     ]),
     email: new FormControl("", [
       Validators.required,

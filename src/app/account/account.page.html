@@ -13,8 +13,12 @@
     <div class="bordered">
       <div class="flex center" #oldName>
         <h1>{{ this.userDetails.name }}</h1>
-        <ion-button (click)="showRenameInput()" class="rename">
-          <ion-icon name="pencil-outline"></ion-icon>
+
+        <ion-button 
+        *ngIf="this.viewUid === this.userUid" 
+        (click)="showRenameInput()" 
+        class="rename">
+          <ion-icon name="pencil-outline"></ion-icon> <!--Shown if current user is looking at their own profile-->
         </ion-button>
       </div>
     
@@ -31,7 +35,7 @@
     </div>
   </ng-container>
 
-  <ng-container> <!--ngif this user is currentUser -->
+  <ng-container *ngIf="this.viewUid === this.userUid"> <!--Shown if current user is looking at their own profile-->
     <div class="bordered-bottom">
       <div class="flex center">
         <ion-button (click)="this.routeTo('forgot')">Change password</ion-button>

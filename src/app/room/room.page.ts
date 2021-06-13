@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonInput, IonButton } from '@ionic/angular';
 import firebase from 'firebase/app';
-import { GameService, AuthService, RoomService, UsersService } from '../services/index';
+import { GameService, RoomService, UsersService } from '../services/index';
 import { Chart, 
   LineController, 
   BarController, 
@@ -86,7 +86,6 @@ export class RoomPage implements OnInit {
     private route: ActivatedRoute,
     private roomService: RoomService,
     private gameService: GameService,
-    private authService: AuthService,
     private usersService: UsersService
   ) { 
     this.uid = firebase.auth().currentUser.uid;
@@ -111,7 +110,8 @@ export class RoomPage implements OnInit {
       if (this.roomData.users.length != 0) {
         setTimeout(() => {
           this.styleNames();
-        }, 500);
+          this.positionSlide();
+        }, 1000);
       };
     });
 
