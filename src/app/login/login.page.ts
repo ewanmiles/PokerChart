@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from "@angular/router";
 import { IonSegment } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,8 @@ export class LoginPage implements OnInit {
   errorMsg: string;
   error: boolean = false;
 
+  usersCollection;
+
   signupForm = new FormGroup({
     name: new FormControl("", [
       Validators.required,
@@ -25,7 +28,8 @@ export class LoginPage implements OnInit {
     tag: new FormControl("", [
       Validators.required,
       Validators.pattern("[a-zA-Z -]*"),
-      Validators.minLength(2)
+      Validators.minLength(2),
+      Validators.maxLength(10)
     ]),
     email: new FormControl("", [
       Validators.required,
@@ -46,8 +50,11 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
-    ) {}
+    private router: Router,
+    private afs: AngularFirestore
+    ) {
+      this.usersCollection = this.afs.collection('users');
+    }
 
   ngOnInit() {}
 
@@ -94,8 +101,24 @@ export class LoginPage implements OnInit {
       "emailInvalid": "That email is not valid, please enter a valid email.",
       "password": "That password is too weak, please enter a stronger password.",
       "unknown": "Something went wrong, please try again later.",
+      "tagTaken": "That tag has already been taken by another user, try a different tag."
     }
+
     var value = this.signupForm.controls;
+
+    var snapshot = await this.usersCollection.ref
+      .where('tag', '==', value.tag.value.toLowerCase()).get();
+
+    var names = [];
+    snapshot.forEach(doc => {
+      names.push(doc.data().tag);
+    }); //All accounts with this tag if they exist
+
+    if (names.length > 0) {
+      this.errorMsg = errors['tagTaken'];
+      this.error = true;
+      return "";
+    }
 
     var res = await this.authService.doRegister(value);
     

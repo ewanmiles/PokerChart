@@ -19,6 +19,7 @@ export class CreatePage implements OnInit {
 
   buyIn: number;
   curr: string = "£";
+  date: string;
 
   constructor(
     private afs: AngularFirestore,
@@ -33,6 +34,7 @@ export class CreatePage implements OnInit {
     this.currency.value = "£";
     this.name.value = "";
     this.buy.value = this.curr;
+    this.date = new Date().toDateString();
   }
 
   buildRoom() {
@@ -54,7 +56,8 @@ export class CreatePage implements OnInit {
         username,
         this.name.value,
         this.currency.value,
-        this.buyIn
+        this.buyIn,
+        this.date
       ]); //Create room - REMEMBER TO UPDATE SERVICE IF ADDING TO THIS
 
       let data = {

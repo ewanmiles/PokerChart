@@ -20,7 +20,7 @@
       <ion-input type="text" formControlName="name" placeholder="Aaron A Aaronson"></ion-input>
 
       <h1>User Tag</h1>
-      <p class="tip">Like with Twitter, other users can find you using your tag.</p>
+      <p class="tip">Like with Twitter, other users can find you using your tag. 2 to 10 characters.</p>
       <ion-input type="text" formControlName="tag" placeholder="aaronthedon"></ion-input>
 
       <h1>Email</h1>
@@ -30,6 +30,8 @@
       <p class="tip">Min length 8 characters.</p>
       <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
     </form>
+
+    <p class="error" *ngIf="this.error">{{ this.errorMsg }}</p>
 
     <div class="flex">
       <ion-button type="submit" [disabled]="!signupForm.valid" (click)="onSubmit()">Register</ion-button>
@@ -46,11 +48,11 @@
       <p class="tip" (click)="this.routeTo('forgot')">Forgot your password?</p>
     </form>
 
+    <p class="error" *ngIf="this.error">{{ this.errorMsg }}</p>
+
     <div class="flex">
       <ion-button type="submit" (click)="onLogin()">Log in</ion-button>
     </div>
   </div>
 
-  <p>Note: All accounts have been deleted following core updates to user profiles! (09/06)</p>
-  <p *ngIf="this.error">{{ this.errorMsg }}</p>
 </ion-content>

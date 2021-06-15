@@ -143,7 +143,8 @@ export class RoomPage implements OnInit {
       potsWon: 0,
       preFolds: 0,
       takeArray: [],
-      valueArray: [this.roomData.buyIn]
+      valueArray: [this.roomData.buyIn],
+      date: this.roomData.date
     } // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
 
     this.roomService.createUserCollection(this.routerData.roomID, this.uid, this.myData);

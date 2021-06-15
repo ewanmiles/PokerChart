@@ -66,6 +66,7 @@ export class HomePage implements OnInit {
   userGameHistory;
   userDetails;
   gameName: string | number = "";
+  date: string;
   curr: string = "£";
 
   stackPoints;
@@ -239,6 +240,7 @@ export class HomePage implements OnInit {
   }
 
   startGame() {
+    this.date = new Date().toDateString();
     this.hand = 0;
     const newVal = `${this.buy.value}`.replace(this.curr,"");
     this.buyIn = parseFloat(newVal);
@@ -277,8 +279,10 @@ export class HomePage implements OnInit {
           this.avgChange, 
           0,
           this.preFolds,
-          this.potsWon]);
+          this.potsWon,
+          this.date]);
           // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
+          // ALSO ALL OTHER INSTANCES ON THIS PAGE (ctrl + f 'addToGames')
       
       var oldGameNo = this.userDetails.games;
       this.usersService.updateGameNumber(this.uid, oldGameNo+1);
@@ -368,7 +372,8 @@ export class HomePage implements OnInit {
           this.avgChange, 
           this.takeArray[0].toFixed(2),
           this.preFolds,
-          this.potsWon]); //Push to database
+          this.potsWon,
+          this.date]); //Push to database
           // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
     }
   }
@@ -431,7 +436,8 @@ export class HomePage implements OnInit {
         this.avgChange, 
         takeToPush,
         this.preFolds,
-        this.potsWon]); //Push to database
+        this.potsWon,
+        this.date]); //Push to database
         // IF YOU ADD TO THIS MAKE SURE TO UPDATE THE SERVICE
   }
 

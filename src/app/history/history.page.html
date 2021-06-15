@@ -59,7 +59,10 @@
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-button>
       </div>
-      
+
+      <ng-container *ngIf="this.chosenGame.date">
+        <p>{{ this.chosenGame.date }}</p>
+      </ng-container>
 
       <ion-button class="back">
         <ion-icon name="arrow-back-outline"></ion-icon>
